@@ -237,6 +237,13 @@ function venSelectionnerFormat(btn) {
   document.getElementById('ven-quantite').value = '1';
   venAfficherStickyBar();
 }
+function venAfficherStickyBar() {
+  const f = venFormatSelectionne, p = venProduitSelectionne;
+  document.getElementById('ven-sticky-info').textContent = `${p.nom} — ${f.poids} ${f.unite}`;
+  venMettreAJourPrixAffiche();
+  document.getElementById('ven-sticky-bar').classList.remove('cache');
+  document.querySelector('.ven-cascade-zone')?.classList.add('avec-sticky');
+}
 
 function venCacherStickyBar() {
   document.getElementById('ven-sticky-bar')?.classList.add('cache');
