@@ -245,12 +245,6 @@ function venCacherStickyBar() {
   venProduitSelectionne = null;
 }
 
-function venCacherStickyBar() {
-  document.getElementById('ven-sticky-bar')?.classList.add('cache');
-  venFormatSelectionne  = null;
-  venProduitSelectionne = null;
-}
-
 function venMettreAJourPrixAffiche() {
   if (!venFormatSelectionne) return;
   const qte = parseInt(document.getElementById('ven-quantite').value) || 1;
@@ -781,29 +775,6 @@ function fermerModalApresVente() {
 // ═══════════════════════════════════════
 
 
-async function payerParSquare() {
-  if (!venPanier.length) { afficherMsg('ventes', 'Aucun article dans le panier.', 'erreur'); return; }
-  if (!squareAppId) { afficherMsg('ventes', 'Square non configuré.', 'erreur'); return; }
-
-  const sousTotal  = venPanier.reduce((s, l) => s + (l.prix_unitaire * l.quantite), 0);
-  const livraison  = parseFloat(String(document.getElementById('ven-livraison').value).replace(',', '.')) || 0;
-  const rabais     = venCalculerRabais();
-  const total      = Math.max(0, sousTotal + livraison - rabais);
-  const totalCents = Math.round(total * 100);
-
-  if (totalCents <= 0) { afficherMsg('ventes', 'Total invalide.', 'erreur'); return; }
-
-  const sdkData = {
-    amount_money: { amount: totalCents, currency_code: 'CAD' },
-    client_id: squareAppId,
-    version: '1.3',
-    notes: 'Vente Univers Caresse',
-    options: { supported_tender_types: ['CREDIT_CARD'] }
-  };
-
-  document.getElementById('modal-square-confirmation').classList.add('ouvert');
-  window.location.href = 'square-commerce-v1://payment/create?data=' + encodeURIComponent(JSON.stringify(sdkData));
-}
 async function payerParSquare() {
   if (!venPanier.length) { afficherMsg('ventes', 'Aucun article dans le panier.', 'erreur'); return; }
   if (!squareAppId) { afficherMsg('ventes', 'Square non configuré.', 'erreur'); return; }
