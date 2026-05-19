@@ -49,6 +49,18 @@ function medFiltrer() {
     </div>`).join('');
 }
 
+async function envoyerDriveVersCloudinary() {
+  afficherChargement();
+  afficherMsg('mediatheque', 'Envoi vers Cloudinary en cours… (peut prendre quelques minutes)');
+  const res = await appelAPI('envoyerDriveVersCloudinary');
+  cacherChargement();
+  if (!res || !res.success) {
+    afficherMsg('mediatheque', '❌ Erreur : ' + (res?.message || 'inconnue'), 'erreur');
+    return;
+  }
+  afficherMsg('mediatheque', '✅ ' + res.message);
+}
+
 async function mediathequeSyncCloudinary() {
   afficherChargement();
   afficherMsg('mediatheque', 'Synchronisation en cours…');
