@@ -3530,10 +3530,9 @@
       <button class="btn-fermer-panneau" onclick="fermerModalMediatheque()" title="Fermer">✕</button>
     </div>
     <div class="modal-admin-body">
-      <div class="filtres-bar">
-        <select class="form-ctrl filtre-select" id="mediatheque-filtre-cat" onchange="filtrerMediatheque()">
-          <option value="">Toutes les catégories</option>
-        </select>
+      <div class="filtres-bar" style="flex-direction:column;align-items:stretch;gap:8px">
+        <div id="med-modal-filtres-n2" style="display:flex;flex-wrap:wrap;gap:8px;"></div>
+        <div id="med-modal-filtres-n3" style="display:flex;flex-wrap:wrap;gap:8px;"></div>
         <input type="text" class="form-ctrl filtre-recherche" id="mediatheque-filtre-nom" oninput="filtrerMediatheque()" placeholder="Rechercher par nom">
       </div>
       <div id="mediatheque-grille" class="mediatheque-grille"></div>
