@@ -1873,3 +1873,63 @@ tr:has(+ .ven-resume-row) td {
 
 .apv-boutons { display: flex; flex-direction: column; gap: 10px; }
 .fv-btn-ne-pas-envoyer { background: var(--square) !important; }
+
+
+
+
+
+
+
+/* ═══════════════════════════════════════
+   CLASSE GÉNÉRIQUE — Liens de navigation
+   Remplace progressivement :
+   - .nav-links a
+   - .nav-admin-btn / .nav-dropdown-item
+   - .sidebar-lien
+   ═══════════════════════════════════════ */
+
+.navigation-lien {
+  font-family: 'Birthstone', cursive;
+  font-size: 1.60rem;
+  font-weight: 400;
+  text-transform: lowercase;
+  letter-spacing: 0.1em;
+  color: var(--gris-fonce);
+  text-decoration: none;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 8px 14px;
+  display: inline-block;
+  position: relative;
+  transition: color 0.2s;
+}
+
+/* Soulignement doré — toujours présent mais invisible */
+.navigation-lien::after {
+  content: '';
+  position: absolute;
+  bottom: -4px;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: var(--accent);
+  transform: scaleX(0);
+  transition: transform 0.3s;
+}
+
+/* Hover */
+.navigation-lien:hover {
+  color: var(--primary);
+}
+
+/* Actif — vert + soulignement doré visible */
+.navigation-lien.actif,
+.navigation-lien.active {
+  color: var(--primary);
+}
+
+.navigation-lien.actif::after,
+.navigation-lien.active::after {
+  transform: scaleX(1);
+}
