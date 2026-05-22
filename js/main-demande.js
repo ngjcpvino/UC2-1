@@ -109,27 +109,15 @@ function demandeRafraichirAffichage() {
 // ─── CASES À COCHER DANS LA MODAL PRODUIT (étape 2) ───
 // Titre + une ligne par format (prix + format + case). Visible seulement si
 // DEMANDE_ACTIVE. La ligne de prix existante est cachée pour ne pas la répéter.
-function demandeStyleCases() {
-  if (document.getElementById('demande-cases-style')) return;
-  const style = document.createElement('style');
-  style.id = 'demande-cases-style';
-  style.textContent =
-    '.demande-cases{width:100%;padding:0 20px;box-sizing:border-box}' +
-    '.demande-cases-titre{font-size:.95rem;font-weight:600;color:#fff;text-align:center;margin-bottom:12px}' +
-    '.demande-case-ligne{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:8px 0;cursor:pointer;color:#fff;border-top:1px solid rgba(255,255,255,.25)}' +
-    '.demande-case-texte{font-size:.9rem}' +
-    '.demande-case-input{width:18px;height:18px;cursor:pointer;flex-shrink:0}';
-  document.head.appendChild(style);
-}
+
 
 function demandeInjecterCasesModal(produit) {
   if (!DEMANDE_ACTIVE) return;
   const hex = document.getElementById('modal-visuel-hex');
   if (!hex) return;
 
-  demandeStyleCases();
-
   const ancien = document.getElementById('demande-cases');
+  
   if (ancien) ancien.remove();
 
   const prixFormatEl = document.getElementById('modal-prix-format');
@@ -154,19 +142,24 @@ function demandeInjecterCasesModal(produit) {
     const unite = f.unite;
     const prix  = parseFloat(f.prix_vente);
 
-    const ligne = document.createElement('label');
+    const ligne = document.createElement('div');
     ligne.className = 'demande-case-ligne';
 
     const texte = document.createElement('span');
     texte.className = 'demande-case-texte';
     texte.textContent = prix.toFixed(2).replace('.', ',') + ' $ / ' + poids + ' ' + unite;
 
-    const caseACocher = document.createElement('input');
-    caseACocher.type = 'checkbox';
-    caseACocher.className = 'demande-case-input';
-    caseACocher.checked = demandeContient(produit.pro_id, poids, unite);
-    caseACocher.addEventListener('change', () => {
-      if (caseACocher.checked) {
+    const coeur = document.createElement('span');
+    coeur.className = 'demande-case-coeur';
+    let coche = demandeContient(produit.pro_id, poids, unite);
+    coeur.textContent = coche ? '♥' : '♡';
+    if (coche) coeur.classList.add('coche');
+
+    ligne.addEventListener('click', () => {
+      coche = !coche;
+      coeur.textContent = coche ? '♥' : '♡';
+      coeur.classList.toggle('coche', coche);
+      if (coche) {
         demandeAjouter(produit.pro_id, poids, unite, produit.nom, prix);
       } else {
         demandeRetirer(produit.pro_id, poids, unite);
@@ -174,7 +167,7 @@ function demandeInjecterCasesModal(produit) {
     });
 
     ligne.appendChild(texte);
-    ligne.appendChild(caseACocher);
+    ligne.appendChild(coeur);
     bloc.appendChild(ligne);
   });
 
