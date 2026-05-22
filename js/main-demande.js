@@ -109,6 +109,15 @@ function demandeRafraichirAffichage() {
     const coche = demandeContientProduit(carte.dataset.proId);
     carte.classList.toggle('demande-coche', coche);
   });
+
+  // Mettre à jour la bulle compteur
+  const bulle = document.getElementById('demande-bulle');
+  if (bulle) {
+    const nb = demandeNombreItems();
+    const nbEl = bulle.querySelector('.demande-bulle-nb');
+    if (nbEl) nbEl.textContent = nb;
+    bulle.classList.toggle('cache', nb < 1);
+  }
 }
 
 // ─── CASES À COCHER DANS LA MODAL PRODUIT (étape 2) ───
@@ -183,4 +192,10 @@ function demandeInjecterCasesModal(produit) {
 document.addEventListener('DOMContentLoaded', () => {
   if (!DEMANDE_ACTIVE) return;
   chargerDemandeListe();
+  const bulle = document.createElement('div');
+  bulle.id = 'demande-bulle';
+  bulle.className = 'demande-bulle cache';
+  bulle.innerHTML = '<span class="demande-bulle-nb"></span>';
+  document.body.appendChild(bulle);
+  demandeRafraichirAffichage();
 });
