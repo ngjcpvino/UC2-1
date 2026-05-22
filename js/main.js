@@ -932,6 +932,8 @@ function ouvrirModal(produit) {
     }
   }
 
+  if (typeof demandeInjecterCasesModal === 'function') demandeInjecterCasesModal(produit);
+
   document.getElementById('modal-produit').classList.add('ouvert');
   document.body.style.overflow = 'hidden';
 }
