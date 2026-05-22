@@ -501,7 +501,7 @@ select.form-control, select.form-ctrl { cursor: pointer; }
 .modal-visuel-hex { background: color-mix(in srgb, var(--col-hex) 90%, transparent); padding: 20px 24px; display: flex; align-items: flex-end; flex: 1; }
 .modal-prix-format { font-family: 'DM Sans', sans-serif; font-size: 0.85rem; color: var(--blanc); font-weight: 400; letter-spacing: 0.03em; }
 .demande-cases { width: 100%; box-sizing: border-box; }
-.demande-cases-titre { font-family: 'DM Sans', sans-serif; font-size: var(--texte-95); font-weight: 300; color: var(--blanc); text-align: left; margin-bottom: 12px; }
+.demande-cases-titre { font-family: 'DM Sans', sans-serif; font-size: var(--texte-75); font-weight: 300; color: var(--blanc); text-align: left; margin-bottom: 12px; }
 .demande-case-ligne { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 8px 0; cursor: pointer; color: var(--blanc); border-top: 1px solid var(--blanc-pur-15); }
 .demande-case-texte { font-family: 'DM Sans', sans-serif; font-size: var(--texte-85); font-weight: 300; }
 .demande-case-coeur { font-size: var(--texte-130); line-height: 1; flex-shrink: 0; color: var(--blanc-pur-50); transition: color 0.15s, transform 0.15s; }
