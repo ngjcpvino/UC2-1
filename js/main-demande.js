@@ -220,6 +220,12 @@ function demandeCreerModalListe() {
         '<div id="demande-form-erreur" class="demande-form-erreur cache"></div>' +
         '<button type="button" class="bouton bouton-grand demande-form-envoyer" data-action="envoyer">Envoyer la demande</button>' +
       '</div>' +
+      '<div id="demande-vue-merci" class="cache">' +
+        '<h2 class="demande-modal-titre">Demande envoyée !</h2>' +
+        '<p class="demande-form-intro">Merci ! Nous avons bien reçu votre liste et nous reviendrons vers vous très bientôt pour confirmer les délais, les coûts et la disponibilité.</p>' +
+        '<p class="demande-form-intro">Surveillez votre boîte de réception — et pensez à vérifier vos pourriels, au cas où.</p>' +
+        '<button type="button" class="bouton bouton-grand demande-continuer" data-action="fermer">Fermer</button>' +
+      '</div>' +
     '</div>';
   document.body.appendChild(overlay);
 
@@ -234,6 +240,7 @@ function demandeCreerModalListe() {
     if (action === 'continuer') { demandeAllerForm(); return; }
     if (action === 'retour')    { demandeRetourListe(); return; }
     if (action === 'envoyer')   { demandeEnvoyer(); return; }
+    if (action === 'fermer')    { demandeFermerModalListe(); return; }
     const ligne = btn.closest('[data-cle]');
     if (!ligne) return;
     const pro_id = ligne.dataset.proId;
@@ -313,18 +320,21 @@ function demandeAllerForm() {
 function demandeRetourListe() {
   const vueListe = document.getElementById('demande-vue-liste');
   const vueForm  = document.getElementById('demande-vue-form');
+  const vueMerci = document.getElementById('demande-vue-merci');
   if (!vueListe || !vueForm) return;
   vueForm.classList.add('cache');
+  if (vueMerci) vueMerci.classList.add('cache');
   vueListe.classList.remove('cache');
 }
 
-function demandeEnvoyer() {
+async function demandeEnvoyer() {
   const nom        = (document.getElementById('demande-nom').value || '').trim();
   const courriel   = (document.getElementById('demande-courriel').value || '').trim();
   const telephone  = (document.getElementById('demande-telephone').value || '').trim();
   const codePostal = (document.getElementById('demande-code-postal').value || '').trim();
   const message    = (document.getElementById('demande-message').value || '').trim();
   const erreurEl   = document.getElementById('demande-form-erreur');
+  const btn        = document.querySelector('.demande-form-envoyer');
 
   if (!nom || !courriel || !telephone || !codePostal) {
     erreurEl.textContent = 'Veuillez remplir tous les champs obligatoires.';
@@ -338,9 +348,36 @@ function demandeEnvoyer() {
   }
   erreurEl.classList.add('cache');
 
-  // ── ÉTAPE 7 : l'envoi réel se branchera ici (envoyerDemandeCommande). ──
-  // Données prêtes : nom, courriel, telephone, codePostal, message + demandeListe
-  alert('Tout est validé. L’envoi sera branché à l’étape 7.');
+  if (btn) { btn.disabled = true; btn.textContent = 'Envoi en cours…'; }
+
+  const lignes = demandeListe.map(i => ({
+    pro_id: i.pro_id,
+    format_poids: i.format_poids,
+    format_unite: i.format_unite,
+    quantite: i.quantite,
+    prix_unitaire: i.prix_unitaire
+  }));
+
+  try {
+    const res = (typeof appelAPIPost === 'function')
+      ? await appelAPIPost('envoyerDemandeCommande', {
+          client: nom, courriel, telephone, code_postal: codePostal, message, lignes
+        })
+      : null;
+    if (!res || !res.success) throw new Error('Echec envoi');
+
+    demandeVider();
+    ['demande-nom', 'demande-courriel', 'demande-telephone', 'demande-code-postal', 'demande-message']
+      .forEach(id => { const el = document.getElementById(id); if (el) el.value = ''; });
+    const vueForm  = document.getElementById('demande-vue-form');
+    const vueMerci = document.getElementById('demande-vue-merci');
+    if (vueForm)  vueForm.classList.add('cache');
+    if (vueMerci) vueMerci.classList.remove('cache');
+  } catch (err) {
+    erreurEl.textContent = "Une erreur s'est produite. Veuillez réessayer ou nous écrire directement.";
+    erreurEl.classList.remove('cache');
+  }
+  if (btn) { btn.disabled = false; btn.textContent = 'Envoyer la demande'; }
 }
 
 // ─── INITIALISATION ───
