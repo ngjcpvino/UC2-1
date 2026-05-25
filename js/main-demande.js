@@ -5,7 +5,7 @@
    ═══════════════════════════════════════ */
 
 // ─── DÉTECTION DU FLAG TEST ───
-const DEMANDE_ACTIVE = new URLSearchParams(window.location.search).has('test');
+const DEMANDE_ACTIVE = true;
 
 // ─── ÉTAT GLOBAL ───
 const DEMANDE_STORAGE_KEY = 'uc_demande';
