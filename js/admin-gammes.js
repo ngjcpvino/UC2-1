@@ -71,6 +71,14 @@ function ouvrirFicheGamme2(gam_id) {
   const produitsGamme = donneesProduits.filter(p => p.gam_id === gam_id);
   const elProduits = document.getElementById('fiche-gamme-produits');
   if (elProduits) elProduits.textContent = produitsGamme.length ? produitsGamme.map(p => p.nom).join(' — ') : 'Aucun produit';
+  const elIngs = document.getElementById('fiche-gamme-ingredients');
+  if (elIngs) {
+    appelAPI('getGammesIngredients', { gam_id }).then(res => {
+      const ings = (res && res.success) ? res.items : [];
+      if (!ings.length) { elIngs.innerHTML = '<p class="texte-secondaire">Aucun ingrédient</p>'; return; }
+      elIngs.innerHTML = ings.map(i => `<div class="fiche-ingredient"><span class="fiche-ing-nom">${i.nom_ingredient || ''}</span><span class="fiche-ing-qte">${i.quantite_g || 0} g</span></div>`).join('');
+    });
+  }
 
   document.getElementById('fiche-gamme-modifier').onclick = () => { fermerFicheGamme2(); modifierGamme(gam_id); };
   document.getElementById('btn-supprimer-gamme').onclick  = () => supprimerGamme(gam_id);
@@ -96,6 +104,13 @@ function ouvrirFormGamme(col_id) {
   document.getElementById('fg-nom').value         = '';
   document.getElementById('fg-rang').value        = '';
   document.getElementById('fg-desc').value        = '';
+  document.getElementById('fg-slogan').value      = '';
+  document.getElementById('fg-photo-url').value   = '';
+  document.getElementById('fg-photo-noel-url').value = '';
+  const previewGN1 = document.getElementById('fg-photo-preview');
+  if (previewGN1) previewGN1.innerHTML = '';
+  const previewGN2 = document.getElementById('fg-photo-noel-preview');
+  if (previewGN2) previewGN2.innerHTML = '';
   (document.getElementById('fg-couleur-hex') || {}).value = '';
   const sel = document.getElementById('fg-collection');
   sel.innerHTML = '<option value="">— Choisir —</option>';
@@ -133,8 +148,11 @@ async function sauvegarderGamme2() {
     col_id,
     rang:        rangCalcule,
     nom,
+    slogan:      document.getElementById('fg-slogan').value,
     description: document.getElementById('fg-desc').value,
     couleur_hex: '',
+    photo_url:   document.getElementById('fg-photo-url').value,
+    photo_noel_url: document.getElementById('fg-photo-noel-url').value,
     rowIndex:    rowIndex || null
   };
   const res = await appelAPIPost('saveGamme', d);
@@ -258,6 +276,13 @@ document.getElementById('btn-nouvelle-gamme').classList.add('cache');
   
    document.getElementById('fg-nom').value         = gam.nom || '';
    document.getElementById('fg-id').value          = gam.gam_id;
+   document.getElementById('fg-slogan').value      = gam.slogan || '';
+   document.getElementById('fg-photo-url').value   = gam.photo_url || '';
+   document.getElementById('fg-photo-noel-url').value = gam.photo_noel_url || '';
+   const previewG = document.getElementById('fg-photo-preview');
+   if (previewG) previewG.innerHTML = gam.photo_url ? `<img src="${gam.photo_url}" class="photo-preview">` : '';
+   const previewGN = document.getElementById('fg-photo-noel-preview');
+   if (previewGN) previewGN.innerHTML = gam.photo_noel_url ? `<img src="${gam.photo_noel_url}" class="photo-preview">` : '';
  
 document.getElementById('fg-desc').value        = gam.description || '';
   if (document.getElementById('fg-couleur-hex')) (document.getElementById('fg-couleur-hex') || {}).value = gam.couleur_hex || '';

@@ -756,6 +756,8 @@
               <p class="fiche-desc" id="fiche-gamme-desc"></p>
               <div class="fiche-label section-label">Collection</div>
               <div class="form-valeur" id="fiche-gamme-collection"></div>
+              <div class="section-label">Ingrédients de base</div>
+              <div id="fiche-gamme-ingredients"></div>
               <div class="section-label">Produits</div>
               <p class="texte-secondaire" id="fiche-gamme-produits"></p>
             </div>
@@ -800,10 +802,25 @@
                   </select>
                 </div>
                 <input type="hidden" id="fg-rang">
-                
+                <div class="form-groupe col-plein">
+                  <label class="form-label">Slogan</label>
+                  <input type="text" class="form-ctrl" id="fg-slogan">
+                </div>
                 <div class="form-groupe col-plein">
                   <label class="form-label">Description</label>
                   <textarea class="form-ctrl textarea-auto" id="fg-desc" rows="3" oninput="ajusterHauteurTextarea(this)"></textarea>
+                </div>
+                <div class="form-groupe col-plein">
+                  <label class="form-label">Photo principale</label>
+                  <input type="hidden" id="fg-photo-url">
+                  <div id="fg-photo-preview"></div>
+                  <button type="button" class="bouton bouton-vert-pale bouton-petit" onclick="ouvrirMediatheque('fg-photo-url', 'fg-photo-preview', 'Gamme')">Médiathèque</button>
+                </div>
+                <div class="form-groupe col-plein">
+                  <label class="form-label">Photo principale — saisonnière</label>
+                  <input type="hidden" id="fg-photo-noel-url">
+                  <div id="fg-photo-noel-preview"></div>
+                  <button type="button" class="bouton bouton-vert-pale bouton-petit" onclick="ouvrirMediatheque('fg-photo-noel-url', 'fg-photo-noel-preview', 'Gamme Noël')">Médiathèque</button>
                 </div>
                 <div class="form-groupe col-plein">
                   <label class="form-label">Ingrédients de base</label>
