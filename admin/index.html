@@ -382,23 +382,18 @@
                 <textarea class="form-ctrl textarea-auto" id="fc-desc-col" rows="5" oninput="ajusterHauteurTextarea(this)"></textarea>
               </div>
               
-              <div class="form-groupe col-plein">
+            
+                <div class="form-groupe col-plein">
                 <label class="form-label">Photo collection</label>
-                <div class="cloudinary-zone">
-                  <input type="text" class="form-ctrl" id="fc-photo-url">
-                  <button type="button" class="bouton bouton-vert-pale" onclick="ouvrirCloudinaryCollection()">Choisir une photo</button>
-                  <button type="button" class="bouton bouton-vert-pale" onclick="ouvrirMediatheque('fc-photo-url', 'fc-photo-preview', 'Collection')">Médiathèque</button>
-                </div>
+                <input type="hidden" id="fc-photo-url">
                 <div id="fc-photo-preview"></div>
+                <button type="button" class="bouton bouton-vert-pale bouton-petit" onclick="ouvrirMediatheque('fc-photo-url', 'fc-photo-preview', 'Collection')">Médiathèque</button>
               </div>
               <div class="form-groupe col-plein">
                 <label class="form-label">Photo collection — saisonnière</label>
-                <div class="cloudinary-zone">
-                  <input type="text" class="form-ctrl" id="fc-photo-url-noel">
-                  <button type="button" class="bouton bouton-vert-pale" onclick="ouvrirCloudinaryCollectionNoel()">Choisir une photo</button>
-                  <button type="button" class="bouton bouton-vert-pale" onclick="ouvrirMediatheque('fc-photo-url-noel', 'fc-photo-preview-noel', 'Collection Noël')">Médiathèque</button>
-                </div>
+                <input type="hidden" id="fc-photo-url-noel">
                 <div id="fc-photo-preview-noel"></div>
+                <button type="button" class="bouton bouton-vert-pale bouton-petit" onclick="ouvrirMediatheque('fc-photo-url-noel', 'fc-photo-preview-noel', 'Collection Noël')">Médiathèque</button>
               </div>
             </div>
             </div>
