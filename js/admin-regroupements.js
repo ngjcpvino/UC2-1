@@ -163,6 +163,10 @@ function ouvrirFormRegroupement() {
   document.getElementById('freg-desc').value                           = '';
   document.getElementById('freg-photo-url').value                      = '';
   document.getElementById('freg-photo-noel-url').value                 = '';
+  const previewMainNew = document.getElementById('freg-photo-preview');
+  if (previewMainNew) previewMainNew.innerHTML = '';
+  const previewNoelNew = document.getElementById('freg-photo-noel-preview');
+  if (previewNoelNew) previewNoelNew.innerHTML = '';
   const selCat = document.getElementById('freg-cat');
   selCat.innerHTML = '<option value="">— Choisir —</option>';
   Object.keys(listesDropdown.categoriesMap || {}).sort((a,b) => (listesDropdown.categoriesMap[a]||'').localeCompare(listesDropdown.categoriesMap[b]||'','fr')).forEach(k => {
@@ -237,6 +241,10 @@ function modifierRegroupement(fra_id) {
   document.getElementById('freg-desc').value                           = fra.description || '';
   document.getElementById('freg-photo-url').value                      = fra.photo_url || '';
   document.getElementById('freg-photo-noel-url').value                 = fra.photo_noel_url || '';
+  const previewMain = document.getElementById('freg-photo-preview');
+  if (previewMain) previewMain.innerHTML = fra.photo_url ? `<img src="${fra.photo_url}" class="photo-preview">` : '';
+  const previewNoel = document.getElementById('freg-photo-noel-preview');
+  if (previewNoel) previewNoel.innerHTML = fra.photo_noel_url ? `<img src="${fra.photo_noel_url}" class="photo-preview">` : '';
   const selCat = document.getElementById('freg-cat');
   selCat.innerHTML = '<option value="">— Choisir —</option>';
   Object.keys(listesDropdown.categoriesMap || {}).sort((a,b) => (listesDropdown.categoriesMap[a]||'').localeCompare(listesDropdown.categoriesMap[b]||'','fr')).forEach(k => {
