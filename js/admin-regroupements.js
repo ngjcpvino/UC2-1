@@ -32,6 +32,12 @@ function ouvrirFicheRegroupement(fra_id) {
   document.getElementById('fiche-regroupement-desc').textContent       = fra.description || '—';
   document.getElementById('fiche-regroupement-slogan').textContent     = fra.slogan || '—';
   document.getElementById('fiche-regroupement-mode').textContent       = fra.mode === 'manuel' ? 'Manuel' : 'Automatique';
+  const estManuel = fra.mode === 'manuel';
+  ['fiche-regroupement-categorie','fiche-regroupement-ingredient','fiche-regroupement-cat-exclues','fiche-regroupement-col-exclues','fiche-regroupement-gam-exclues'].forEach(id => {
+    const el = document.getElementById(id);
+    if (el && el.previousElementSibling) el.previousElementSibling.style.display = estManuel ? 'none' : '';
+    if (el) el.style.display = estManuel ? 'none' : '';
+  });
   document.getElementById('fiche-regroupement-categorie').textContent  = (listesDropdown.categoriesMap || {})[fra.cat_id] || '—';
   const ing = (listesDropdown.fullData || []).find(d => d.ing_id === fra.ing_id);
   document.getElementById('fiche-regroupement-ingredient').textContent = ing ? ing.nom_UC : (fra.ing_id || '—');
