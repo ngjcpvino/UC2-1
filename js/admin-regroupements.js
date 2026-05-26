@@ -31,11 +31,37 @@ function ouvrirFicheRegroupement(fra_id) {
   document.getElementById('fiche-regroupement-titre').textContent      = (fra.nom || '').toUpperCase();
   document.getElementById('fiche-regroupement-desc').textContent       = fra.description || '—';
   document.getElementById('fiche-regroupement-slogan').textContent     = fra.slogan || '—';
+  document.getElementById('fiche-regroupement-mode').textContent       = fra.mode === 'manuel' ? 'Manuel' : 'Automatique';
+  document.getElementById('fiche-regroupement-categorie').textContent  = (listesDropdown.categoriesMap || {})[fra.cat_id] || '—';
   const ing = (listesDropdown.fullData || []).find(d => d.ing_id === fra.ing_id);
-  document.getElementById('fiche-regroupement-ingredient').textContent = ing ? ing.nom_UC : fra.ing_id;
-  const produitsDuRegroupement = donneesProduits.filter(p =>
-    (p.ingredients || []).some(i => i.ing_id === fra.ing_id)
-  );
+  document.getElementById('fiche-regroupement-ingredient').textContent = ing ? ing.nom_UC : (fra.ing_id || '—');
+  const catsEx = (fra.categories_exclues || []).map(k => (listesDropdown.categoriesMap || {})[k] || k).join(', ');
+  document.getElementById('fiche-regroupement-cat-exclues').textContent = catsEx || '—';
+  const colsEx = (fra.collections_exclues || []).map(k => (donneesCollections.find(c => c.col_id === k) || {}).nom || k).join(', ');
+  document.getElementById('fiche-regroupement-col-exclues').textContent = colsEx || '—';
+  const gamsEx = (fra.gammes_exclues || []).map(k => (donneesGammes.find(g => g.gam_id === k) || {}).nom || k).join(', ');
+  document.getElementById('fiche-regroupement-gam-exclues').textContent = gamsEx || '—';
+  let produitsDuRegroupement;
+  if (fra.mode === 'manuel') {
+    produitsDuRegroupement = donneesProduits.filter(p =>
+      Array.isArray(p.regroupements_manuels) && p.regroupements_manuels.indexOf(fra.fra_id) >= 0
+    );
+  } else {
+    produitsDuRegroupement = donneesProduits.filter(p => {
+      const aIng = fra.ing_id ? (p.ingredients || []).some(i => i.ing_id === fra.ing_id) : true;
+      if (!aIng) return false;
+      if ((fra.collections_exclues || []).indexOf(p.col_id) >= 0) return false;
+      if ((fra.gammes_exclues || []).indexOf(p.gam_id) >= 0) return false;
+      const aCatExclue = (fra.categories_exclues || []).some(catId =>
+        (p.ingredients || []).some(i => {
+          const ing = (listesDropdown.fullData || []).find(d => d.ing_id === i.ing_id);
+          return ing && ing.cat_id === catId;
+        })
+      );
+      if (aCatExclue) return false;
+      return true;
+    });
+  }
   const elProduits = document.getElementById('fiche-regroupement-produits');
   if (elProduits) elProduits.textContent = produitsDuRegroupement.length
     ? produitsDuRegroupement.map(p => p.nom).join(' — ')
