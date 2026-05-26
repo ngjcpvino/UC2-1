@@ -50,6 +50,7 @@ function ouvrirFicheRegroupement(fra_id) {
   document.getElementById('contenu-regroupements').classList.add('cache');
   document.getElementById('btn-nouveau-regroupement').classList.add('cache');
   document.getElementById('fiche-regroupement').classList.remove('cache');
+  document.getElementById('fiche-regroupement').classList.add('visible');
   window.scrollTo(0, 0);
   document.querySelector('.admin-contenu')?.scrollTo(0, 0);
 }
