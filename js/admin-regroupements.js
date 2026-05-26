@@ -43,9 +43,10 @@ function ouvrirFicheRegroupement(fra_id) {
   document.getElementById('fiche-regroupement-gam-exclues').textContent = gamsEx || '—';
   let produitsDuRegroupement;
   if (fra.mode === 'manuel') {
-    produitsDuRegroupement = donneesProduits.filter(p =>
-      Array.isArray(p.regroupements_manuels) && p.regroupements_manuels.indexOf(fra.fra_id) >= 0
-    );
+    const proIdsLies = ((prodCache && prodCache.regroupementsProduits) || [])
+      .filter(l => String(l.fra_id) === String(fra.fra_id))
+      .map(l => String(l.pro_id));
+    produitsDuRegroupement = donneesProduits.filter(p => proIdsLies.indexOf(String(p.pro_id)) >= 0);
   } else {
     produitsDuRegroupement = donneesProduits.filter(p => {
       const aIng = fra.ing_id ? (p.ingredients || []).some(i => i.ing_id === fra.ing_id) : true;
