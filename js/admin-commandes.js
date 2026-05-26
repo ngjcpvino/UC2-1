@@ -418,9 +418,10 @@ function afficherTableauCommandes(items) {
 // ═══════════════════════════════════════
 async function voirDetailCommande(cmd_id) {
   afficherChargement();
-  const [resEntete, resLignes] = await Promise.all([
+  const [resEntete, resLignes, resLots] = await Promise.all([
     appelAPI('getCommandesEntete'),
-    appelAPI('getCommandesLignes', { cmd_id })
+    appelAPI('getCommandesLignes', { cmd_id }),
+    appelAPI('getLotsDisponibles')
   ]);
   cacherChargement();
 
@@ -435,10 +436,20 @@ async function voirDetailCommande(cmd_id) {
     return;
   }
 
-  c.lignes = (resLignes.items || []).map(l => ({
-    ...l,
-    nom: donneesProduits.find(p => p.pro_id === l.pro_id)?.nom || l.pro_id
-  }));
+  const lotsDispo = (resLots && resLots.success) ? resLots.items : [];
+
+  c.lignes = (resLignes.items || []).map(l => {
+    const lot = lotsDispo.find(x =>
+      String(x.pro_id) === String(l.pro_id) &&
+      String(x.format_poids) === String(l.format_poids) &&
+      String(x.format_unite) === String(l.format_unite)
+    );
+    return {
+      ...l,
+      nom: donneesProduits.find(p => p.pro_id === l.pro_id)?.nom || l.pro_id,
+      stock_dispo: lot ? lot.nb_disponible : 0
+    };
+  });
 
   // Afficher la fiche
   document.getElementById('fiche-commande-titre').textContent = 'Commande ' + c.cmd_id.replace('CMD-', '');
@@ -459,9 +470,22 @@ async function voirDetailCommande(cmd_id) {
       <div class="form-label">Items commandés</div>`;
 
   c.lignes.forEach(l => {
+    const dispo = l.stock_dispo || 0;
+    let stockCouleur, stockTexte;
+    if (dispo >= l.quantite) {
+      stockCouleur = 'var(--primary)';
+      stockTexte = 'Stock prêt : ' + dispo;
+    } else if (dispo > 0) {
+      stockCouleur = 'var(--accent)';
+      stockTexte = 'Stock prêt : ' + dispo + ' (pas assez)';
+    } else {
+      stockCouleur = 'var(--danger)';
+      stockTexte = 'Aucun stock prêt';
+    }
     html += `<div style="padding:8px 0;border-bottom:1px solid var(--beige)">
       <div>${l.nom} — ${l.format_poids} ${l.format_unite}</div>
       <div class="texte-secondaire">Qté : ${l.quantite} × ${formaterPrix(l.prix_unitaire)} = ${formaterPrix(l.prix_unitaire * l.quantite)}</div>
+      <div style="color:${stockCouleur};font-size:0.78rem;font-weight:500;margin-top:2px">${stockTexte}</div>
     </div>`;
   });
 
