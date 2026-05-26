@@ -73,7 +73,7 @@ function medFiltrer() {
     if (_medNiveau2 && parts[1] !== _medNiveau2) return false;
     if (_medNiveau3 && parts[2] !== _medNiveau3) return false;
     return true;
-  });
+  }).sort((a, b) => (a.nom || '').localeCompare(b.nom || '', 'fr'));
 
   const grille = document.getElementById('med-grille');
   document.getElementById('med-compteur').textContent = items.length + ' photo(s)';
