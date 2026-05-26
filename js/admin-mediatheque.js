@@ -24,14 +24,14 @@ async function chargerMediatheque() {
   _mediathequeDonnees = res.items.filter(i => (i.categorie || '').toLowerCase().startsWith('images/'));
   const niveaux2 = [...new Set(_mediathequeDonnees.map(i => i.categorie.split('/')[1]).filter(Boolean))].sort();
   const div = document.getElementById('med-filtres-boutons');
-  div.innerHTML = `<button class="bouton bouton-petit actif" onclick="medFiltrerN2('')">Toutes</button>` +
-    niveaux2.map(n2 => `<button class="bouton bouton-vert-pale" onclick="medFiltrerN2('${n2}')">${n2}</button>`).join('');
+  div.innerHTML = `<button class="filtre-btn actif" onclick="medFiltrerN2('')">Toutes</button>` +
+    niveaux2.map(n2 => `<button class="filtre-btn" onclick="medFiltrerN2('${n2}')">${n2}</button>`).join('');
   medFiltrer();
 }
 
 function medFiltrer() {
   // Mise à jour boutons niveau 2 actifs
-  document.querySelectorAll('#med-filtres-boutons .bouton').forEach(b => {
+  document.querySelectorAll('#med-filtres-boutons .filtre-btn').forEach(b => {
     const onclick = b.getAttribute('onclick') || '';
     const match = onclick.match(/medFiltrerN2\('([^']*)'\)/);
     const val = match ? match[1] : null;
@@ -58,8 +58,8 @@ function medFiltrer() {
       .map(i => i.categorie.split('/')[2])
       .filter(Boolean))].sort();
     if (sousCats.length) {
-      zoneN3.innerHTML = `<button class="bouton bouton-petit${!_medNiveau3 ? ' actif' : ' bouton-vert-pale'}" onclick="medFiltrerN3('')">Tout ${_medNiveau2}</button>` +
-        sousCats.map(n3 => `<button class="bouton${_medNiveau3 === n3 ? ' actif' : ' bouton-vert-pale'}" onclick="medFiltrerN3('${n3}')">${n3}</button>`).join('');
+      zoneN3.innerHTML = `<button class="filtre-btn${!_medNiveau3 ? ' actif' : ''}" onclick="medFiltrerN3('')">Tout ${_medNiveau2}</button>` +
+        sousCats.map(n3 => `<button class="filtre-btn${_medNiveau3 === n3 ? ' actif' : ''}" onclick="medFiltrerN3('${n3}')">${n3}</button>`).join('');
     } else {
       zoneN3.innerHTML = '';
     }
