@@ -398,18 +398,42 @@ function afficherTableauCommandes(items) {
   }
   if (vide) vide.classList.add('cache');
 
-  let html = '<div class="tableau-wrap"><table class="tableau-admin"><thead><tr><th>Date</th><th>Client</th><th>Total prévu</th><th>Acompte</th><th>Solde</th><th>Statut</th></tr></thead><tbody>';
-  items.forEach(c => {
-    html += `<tr class="cliquable" onclick="voirDetailCommande('${c.cmd_id}')">
-      <td>${c.date}</td>
-      <td>${c.client || '—'}</td>
-      <td>${formaterPrix(c.total_prevu)}</td>
-      <td>${formaterPrix(c.acompte)}</td>
-      <td>${formaterPrix(c.solde)}</td>
-      <td>${c.statut}</td>
-    </tr>`;
+  // Blocs dans l'ordre d'affichage (statuts d'aujourd'hui)
+  const blocs = [
+    { titre: 'ENTRANTES', statuts: ['En attente'] },
+    { titre: 'PRÊTES',    statuts: ['Prête'] },
+    { titre: 'ANNULÉES',  statuts: ['Annulée'] }
+  ];
+  const connus = blocs.reduce((s, b) => s.concat(b.statuts), []);
+  const autres = items.filter(c => !connus.includes(c.statut));
+
+  function rendreBloc(titre, liste) {
+    if (!liste.length) return '';
+    const lignes = liste.map(c => `<tr class="cliquable" onclick="voirDetailCommande('${c.cmd_id}')">
+        <td>${c.date}</td>
+        <td>${c.client || '—'}</td>
+        <td>${formaterPrix(c.total_prevu)}</td>
+        <td>${formaterPrix(c.acompte)}</td>
+        <td>${formaterPrix(c.solde)}</td>
+        <td>${c.statut}</td>
+      </tr>`).join('');
+    return `<div class="carte-admin" style="margin-bottom:16px">
+      <div class="carte-admin-entete">${titre} <span class="texte-secondaire">${liste.length} commande${liste.length > 1 ? 's' : ''}</span></div>
+      <div class="tableau-wrap">
+        <table class="tableau-admin">
+          <thead><tr><th>Date</th><th>Client</th><th>Total prévu</th><th>Acompte</th><th>Solde</th><th>Statut</th></tr></thead>
+          <tbody>${lignes}</tbody>
+        </table>
+      </div>
+    </div>`;
+  }
+
+  let html = '';
+  blocs.forEach(b => {
+    html += rendreBloc(b.titre, items.filter(c => b.statuts.includes(c.statut)));
   });
-  html += '</tbody></table></div>';
+  if (autres.length) html += rendreBloc('AUTRES', autres);
+
   if (tableau) tableau.innerHTML = html;
 }
 
