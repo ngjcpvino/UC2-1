@@ -1939,3 +1939,11 @@ tr:has(+ .ven-resume-row) td {
   gap: 16px;
   position: relative;
 }
+.bandeau .fiche-bandeau {
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  flex: 1;
+}
