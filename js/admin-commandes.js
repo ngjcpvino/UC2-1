@@ -8,7 +8,9 @@ var cmdLignes          = [];
 var cmdIdEnCours       = null;
 var cmdNumeroAffiche   = '';
 var cmdModeEdition     = false;
-var toutesCommandes    = [];
+var toutesCommandes        = [];
+var toutesCommandesLignes  = [];
+var commandesLotsDispo     = [];
 
 // ═══════════════════════════════════════
 // CHARGEMENT DE LA PAGE
@@ -18,7 +20,14 @@ async function chargerCommandes() {
   const vide    = document.getElementById('vide-commandes');
   if (loading) loading.classList.remove('cache');
 
-  const res = await appelAPI('getCommandesEntete');
+  const [res, resLignes, resLots] = await Promise.all([
+    appelAPI('getCommandesEntete'),
+    appelAPI('getCommandesLignes'),
+    appelAPI('getLotsDisponibles')
+  ]);
+
+  toutesCommandesLignes = (resLignes && resLignes.success) ? resLignes.items : [];
+  commandesLotsDispo    = (resLots && resLots.success) ? resLots.items : [];
 
   if (loading) loading.classList.add('cache');
 
@@ -407,21 +416,47 @@ function afficherTableauCommandes(items) {
   const connus = blocs.reduce((s, b) => s.concat(b.statuts), []);
   const autres = items.filter(c => !connus.includes(c.statut));
 
+  function calculerPastilleStock(cmd_id) {
+    const lignes = toutesCommandesLignes.filter(l => l.cmd_id === cmd_id);
+    if (!lignes.length) return '';
+    let toutPlein = true;
+    let toutVide  = true;
+    for (const l of lignes) {
+      const lot = commandesLotsDispo.find(x =>
+        String(x.pro_id) === String(l.pro_id) &&
+        String(x.format_poids) === String(l.format_poids) &&
+        String(x.format_unite) === String(l.format_unite)
+      );
+      const dispo = lot ? lot.nb_disponible : 0;
+      if (dispo < l.quantite) toutPlein = false;
+      if (dispo > 0) toutVide  = false;
+    }
+    if (toutPlein) return 'var(--primary)';
+    if (toutVide)  return 'var(--danger)';
+    return 'var(--accent)';
+  }
+
   function rendreBloc(titre, liste) {
     if (!liste.length) return '';
-    const lignes = liste.map(c => `<tr class="cliquable" onclick="voirDetailCommande('${c.cmd_id}')">
+    const lignes = liste.map(c => {
+      const couleur = calculerPastilleStock(c.cmd_id);
+      const pastille = couleur
+        ? `<span style="display:inline-block;width:14px;height:14px;border-radius:50%;background:${couleur}"></span>`
+        : '';
+      return `<tr class="cliquable" onclick="voirDetailCommande('${c.cmd_id}')">
         <td>${c.date}</td>
         <td>${c.client || '—'}</td>
         <td>${formaterPrix(c.total_prevu)}</td>
-        <td>${formaterPrix(c.acompte)}</td>
         <td>${formaterPrix(c.solde)}</td>
         <td>${c.statut}</td>
-      </tr>`).join('');
+        <td style="text-align:center">${pastille}</td>
+      </tr>`;
+    }).join('');
     return `<div class="carte-admin" style="margin-bottom:16px">
       <div class="carte-admin-entete">${titre} <span class="texte-secondaire">${liste.length} commande${liste.length > 1 ? 's' : ''}</span></div>
       <div class="tableau-wrap">
         <table class="tableau-admin">
-          <thead><tr><th>Date</th><th>Client</th><th>Total prévu</th><th>Acompte</th><th>Solde</th><th>Statut</th></tr></thead>
+          <thead><tr><th>Date</th><th>Client</th><th>Total prévu</th><th>Solde</th><th>Statut</th><th></th></tr></thead>
           <tbody>${lignes}</tbody>
         </table>
       </div>
