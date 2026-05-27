@@ -1284,7 +1284,7 @@ tr.cliquable { cursor: pointer; }
   padding: 8px 0;
   margin-bottom: 0;
 }
-.fiche-bandeau .form-panel-titre { color: var(--blanc); font-size: 1.3rem; display: block; }
+.fiche-bandeau .form-panel-titre { color: var(--gris-fonce); font-size: 1.4rem; display: block; }
 .fiche-slogan { color: var(--accent); font-family: 'Playfair Display', serif; font-style: italic; font-size: 1rem; display: block; margin-top: 6px; }
 .fiche-desc { font-family: 'DM Sans', sans-serif; font-size: 1rem; color: var(--gris); line-height: 1.7; margin-bottom: 24px; }
 .fiche-inci-etiquette { margin-bottom: 24px; }
