@@ -2111,6 +2111,57 @@
     </div>
   </div>
 
+  <!-- FORMULAIRE COMPLÉTER LA COMMANDE -->
+  <div id="form-completer-commande" class="cache">
+    <div class="form-panel">
+      <div class="form-panel-header">
+        <span class="form-panel-titre" id="form-completer-titre">Compléter la commande</span>
+        <button class="btn-fermer-panneau" onclick="fermerFormCompleter()">✕</button>
+      </div>
+    </div>
+
+    <div class="form-panel">
+      <div class="form-panel-header">
+        <span class="form-panel-titre">Récapitulatif</span>
+      </div>
+      <div class="form-body" id="form-completer-recap"></div>
+    </div>
+
+    <div class="form-panel">
+      <div class="form-panel-header">
+        <span class="form-panel-titre">Frais de livraison</span>
+      </div>
+      <div class="form-body">
+        <input type="text" inputmode="decimal" class="form-ctrl" id="completer-livraison" placeholder="0,00 $ (0 si aucune)">
+      </div>
+    </div>
+
+    <div class="form-panel">
+      <div class="form-panel-header">
+        <span class="form-panel-titre">Note au client</span>
+      </div>
+      <div class="form-body">
+        <textarea class="form-ctrl" id="completer-note" rows="4" placeholder="Message personnalisé qui accompagnera la proposition…"></textarea>
+      </div>
+    </div>
+
+    <div class="form-panel">
+      <div class="form-panel-header">
+        <span class="form-panel-titre">Lien de paiement Square</span>
+      </div>
+      <div class="form-body">
+        <input type="text" class="form-ctrl" id="completer-square" placeholder="Coller le lien Square ici">
+      </div>
+    </div>
+
+    <div class="form-panel form-body-actions">
+      <div class="form-actions">
+        <button class="bouton bouton-contour" onclick="fermerFormCompleter()">Annuler</button>
+        <button class="bouton bouton-or" onclick="envoyerProposition()">Envoyer au client</button>
+      </div>
+    </div>
+  </div>
+
   <!-- FILTRES COMMANDES -->
   <div class="filtres-bar" id="filtres-commandes">
     <select class="form-ctrl filtre-select" id="filtre-cmd-statut" onchange="filtrerCommandes()">

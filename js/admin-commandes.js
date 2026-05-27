@@ -409,9 +409,11 @@ function afficherTableauCommandes(items) {
 
   // Blocs dans l'ordre d'affichage (statuts d'aujourd'hui)
   const blocs = [
-    { titre: 'ENTRANTES', statuts: ['En attente'] },
-    { titre: 'PRÊTES',    statuts: ['Prête'] },
-    { titre: 'ANNULÉES',  statuts: ['Annulée'] }
+    { titre: 'ENTRANTES',              statuts: ['En attente'] },
+    { titre: 'EN ATTENTE DE PAIEMENT', statuts: ['En attente de paiement'] },
+    { titre: 'À EXPÉDIER',             statuts: ['À expédier'] },
+    { titre: 'TERMINÉES',              statuts: ['Terminée'] },
+    { titre: 'ANNULÉES',               statuts: ['Annulée'] }
   ];
   const connus = blocs.reduce((s, b) => s.concat(b.statuts), []);
   const autres = items.filter(c => !connus.includes(c.statut));
@@ -564,7 +566,11 @@ async function voirDetailCommande(cmd_id) {
     <div style="margin-bottom:16px">
       <div class="form-label">Statut</div>
       <div>${c.statut}</div>
-    </div>`;
+    </div>
+    ${c.ven_id_lien ? `<div style="margin-bottom:16px">
+      <div class="form-label">Facture liée</div>
+      <div><a href="#" onclick="event.preventDefault();voirDetailVente('${c.ven_id_lien}')" style="color:var(--primary);text-decoration:underline">${c.ven_id_lien}</a></div>
+    </div>` : ''}`;
 
   document.getElementById('fiche-commande-contenu').innerHTML = html;
 
@@ -572,13 +578,17 @@ async function voirDetailCommande(cmd_id) {
   const actions = document.getElementById('fiche-commande-actions');
   let actionsHTML = '';
 
-  if (c.statut === 'En attente' || c.statut === 'Prête') {
+ if (c.statut === 'En attente') {
     actionsHTML += `<button class="bouton" onclick="modifierCommande('${c.cmd_id}')">Modifier</button>`;
-    if (c.statut === 'En attente') {
-      actionsHTML += `<button class="bouton" onclick="changerStatutCommande('${c.cmd_id}', 'Prête')">Marquer comme prête</button>`;
-    }
-    actionsHTML += `<button class="bouton bouton-or" onclick="convertirCommandeEnVente('${c.cmd_id}')">Convertir en vente</button>`;
+    actionsHTML += `<button class="bouton bouton-or" onclick="ouvrirFormCompleter('${c.cmd_id}')">Compléter la commande</button>`;
     actionsHTML += `<button class="bouton bouton-rouge" onclick="annulerCommande('${c.cmd_id}')">Annuler la commande</button>`;
+  }
+  if (c.statut === 'En attente de paiement') {
+    actionsHTML += `<button class="bouton bouton-or" onclick="paiementRecu('${c.cmd_id}')">Paiement reçu</button>`;
+    actionsHTML += `<button class="bouton bouton-rouge" onclick="annulerCommande('${c.cmd_id}')">Annuler la commande</button>`;
+  }
+  if (c.statut === 'À expédier') {
+    actionsHTML += `<button class="bouton bouton-or" onclick="changerStatutCommande('${c.cmd_id}', 'Terminée')">Marquer comme expédiée</button>`;
   }
   actionsHTML += `<button class="bouton bouton-contour" onclick="fermerFicheCommande()">Fermer</button>`;
 
@@ -755,4 +765,129 @@ async function convertirCommandeEnVente(cmd_id) {
   }));
 
   afficherMsg('ventes', `Commande ${c.cmd_id} prête à être convertie. Ajustez si besoin et finalisez la vente. Acompte versé : ${formaterPrix(c.acompte)}`);
+}
+
+// ═══════════════════════════════════════
+// COMPLÉTER LA COMMANDE (nouveau flow)
+// ═══════════════════════════════════════
+var cmdCompleterIdEnCours = null;
+
+function ouvrirFormCompleter(cmd_id) {
+  const c = toutesCommandes.find(x => x.cmd_id === cmd_id);
+  if (!c) return;
+  cmdCompleterIdEnCours = cmd_id;
+
+  document.getElementById('form-completer-titre').textContent = 'Compléter la commande ' + cmd_id.replace('CMD-', '');
+
+  const lignes = toutesCommandesLignes.filter(l => l.cmd_id === cmd_id);
+  let recap = '<div style="margin-bottom:12px"><strong>' + (c.client || '—') + '</strong>';
+  if (c.courriel)  recap += '<br><span class="texte-secondaire">' + c.courriel + '</span>';
+  if (c.telephone) recap += '<br><span class="texte-secondaire">' + c.telephone + '</span>';
+  recap += '</div><div class="form-label">Items</div>';
+  lignes.forEach(l => {
+    const pro = donneesProduits.find(p => p.pro_id === l.pro_id);
+    const nom = pro ? pro.nom : l.pro_id;
+    recap += '<div style="padding:4px 0">' + nom + ' — ' + l.format_poids + ' ' + l.format_unite + ' × ' + l.quantite + ' = ' + formaterPrix(l.prix_unitaire * l.quantite) + '</div>';
+  });
+  recap += '<div style="margin-top:8px;font-weight:500">Total prévu : ' + formaterPrix(c.total_prevu) + '</div>';
+  document.getElementById('form-completer-recap').innerHTML = recap;
+
+  document.getElementById('completer-livraison').value = '';
+  document.getElementById('completer-note').value     = '';
+  document.getElementById('completer-square').value   = '';
+
+  document.getElementById('fiche-commande').classList.add('cache');
+  document.getElementById('contenu-commandes').classList.add('cache');
+  document.getElementById('filtres-commandes').classList.add('cache');
+  document.getElementById('form-completer-commande').classList.remove('cache');
+  document.querySelector('#section-commandes .page-entete .bouton')?.classList.add('cache');
+  window.scrollTo(0, 0);
+  document.querySelector('.admin-contenu')?.scrollTo(0, 0);
+}
+
+function fermerFormCompleter() {
+  document.getElementById('form-completer-commande').classList.add('cache');
+  document.getElementById('contenu-commandes').classList.remove('cache');
+  document.getElementById('filtres-commandes').classList.remove('cache');
+  document.querySelector('#section-commandes .page-entete .bouton')?.classList.remove('cache');
+  cmdCompleterIdEnCours = null;
+}
+
+async function envoyerProposition() {
+  if (!cmdCompleterIdEnCours) return;
+  const c = toutesCommandes.find(x => x.cmd_id === cmdCompleterIdEnCours);
+  if (!c) return;
+
+  const livraison = document.getElementById('completer-livraison').value;
+  const note      = document.getElementById('completer-note').value;
+  const square    = document.getElementById('completer-square').value;
+  const livraisonNum = parseFloat(String(livraison).replace(',', '.')) || 0;
+
+  afficherChargement();
+
+  // On garde une trace dans les notes (en attendant des vrais champs dédiés)
+  const sep = c.notes ? '\n---\n' : '';
+  const notesComplet = (c.notes || '') + sep + 'Proposition envoyée le ' + new Date().toLocaleDateString('fr-CA') +
+    '\n- Livraison : ' + (livraison || '0') + ' $' +
+    '\n- Lien Square : ' + (square || '—') +
+    '\n- Note au client : ' + (note || '—');
+
+  const lignesPayload = toutesCommandesLignes.filter(l => l.cmd_id === cmdCompleterIdEnCours).map(l => ({
+    pro_id: l.pro_id,
+    format_poids: l.format_poids,
+    format_unite: l.format_unite,
+    quantite: l.quantite,
+    prix_unitaire: l.prix_unitaire
+  }));
+
+  const totalAvec = (c.total_prevu || 0) + livraisonNum;
+
+  const resUpdate = await appelAPIPost('updateCommandeComplete', {
+    cmd_id: cmdCompleterIdEnCours,
+    client: c.client,
+    courriel: c.courriel,
+    telephone: c.telephone,
+    code_postal: c.code_postal,
+    total_prevu: totalAvec,
+    acompte: c.acompte || 0,
+    solde: totalAvec - (c.acompte || 0),
+    notes: notesComplet,
+    lignes: lignesPayload
+  });
+
+  if (!resUpdate || !resUpdate.success) {
+    cacherChargement();
+    afficherMsg('commandes', 'Erreur lors de la sauvegarde.', 'erreur');
+    return;
+  }
+
+  const resStatut = await appelAPIPost('updateStatutCommande', {
+    cmd_id: cmdCompleterIdEnCours,
+    statut: 'En attente de paiement'
+  });
+
+  cacherChargement();
+
+  if (resStatut && resStatut.success) {
+    afficherMsg('commandes', '✅ Proposition prête. ⚠️ La sortie du stock attend la mise à jour serveur.');
+    fermerFormCompleter();
+    chargerCommandes();
+  } else {
+    afficherMsg('commandes', 'Erreur lors du changement de statut.', 'erreur');
+  }
+}
+
+async function paiementRecu(cmd_id) {
+  confirmerAction('Confirmer le paiement reçu et passer à « À expédier » ?', async () => {
+    afficherChargement();
+    const res = await appelAPIPost('updateStatutCommande', { cmd_id, statut: 'À expédier' });
+    cacherChargement();
+    if (res && res.success) {
+      afficherMsg('commandes', '✅ Statut changé à À expédier. ⚠️ La création de la vente VEN-XXXX attend la mise à jour serveur.');
+      fermerFicheCommande();
+      chargerCommandes();
+    } else {
+      afficherMsg('commandes', 'Erreur.', 'erreur');
+    }
+  });
 }
