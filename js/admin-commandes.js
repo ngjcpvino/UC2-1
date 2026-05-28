@@ -861,33 +861,32 @@ async function envoyerProposition() {
     return;
   }
 
-  const resStatut = await appelAPIPost('updateStatutCommande', {
-    cmd_id: cmdCompleterIdEnCours,
-    statut: 'En attente de paiement'
+  const resStock = await appelAPIPost('sortirStockCommande', {
+    cmd_id: cmdCompleterIdEnCours
   });
 
   cacherChargement();
 
-  if (resStatut && resStatut.success) {
-    afficherMsg('commandes', '✅ Proposition prête. ⚠️ La sortie du stock attend la mise à jour serveur.');
+  if (resStock && resStock.success) {
+    afficherMsg('commandes', '✅ Proposition prête, stock sorti.');
     fermerFormCompleter();
     chargerCommandes();
   } else {
-    afficherMsg('commandes', 'Erreur lors du changement de statut.', 'erreur');
+    afficherMsg('commandes', '❌ ' + (resStock?.message || 'Erreur lors de la sortie du stock.'), 'erreur');
   }
 }
 
 async function paiementRecu(cmd_id) {
-  confirmerAction('Confirmer le paiement reçu et passer à « À expédier » ?', async () => {
+  confirmerAction('Confirmer le paiement reçu ? La facture sera créée et la commande passera à « À expédier ».', async () => {
     afficherChargement();
-    const res = await appelAPIPost('updateStatutCommande', { cmd_id, statut: 'À expédier' });
+    const res = await appelAPIPost('creerVenteDepuisCommande', { cmd_id, mode_paiement: 'square' });
     cacherChargement();
     if (res && res.success) {
-      afficherMsg('commandes', '✅ Statut changé à À expédier. ⚠️ La création de la vente VEN-XXXX attend la mise à jour serveur.');
+      afficherMsg('commandes', '✅ Paiement confirmé. Facture ' + res.ven_id + ' créée.');
       fermerFicheCommande();
       chargerCommandes();
     } else {
-      afficherMsg('commandes', 'Erreur.', 'erreur');
+      afficherMsg('commandes', '❌ ' + (res?.message || 'Erreur.'), 'erreur');
     }
   });
 }
