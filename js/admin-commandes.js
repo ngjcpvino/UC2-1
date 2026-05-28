@@ -792,9 +792,12 @@ function ouvrirFormCompleter(cmd_id) {
   recap += '<div style="margin-top:8px;font-weight:500">Total prévu : ' + formaterPrix(c.total_prevu) + '</div>';
   document.getElementById('form-completer-recap').innerHTML = recap;
 
-  document.getElementById('completer-livraison').value = '';
-  document.getElementById('completer-note').value     = '';
-  document.getElementById('completer-square').value   = '';
+  document.getElementById('completer-client').value    = c.client || '';
+  document.getElementById('completer-courriel').value  = c.courriel || '';
+  document.getElementById('completer-telephone').value = c.telephone || '';
+  document.getElementById('completer-livraison').value = (c.livraison && c.livraison > 0) ? c.livraison : '';
+  document.getElementById('completer-note').value     = c.note_proposition || '';
+  document.getElementById('completer-square').value   = c.lien_square || '';
 
   document.getElementById('fiche-commande').classList.add('cache');
   document.getElementById('contenu-commandes').classList.add('cache');
@@ -818,6 +821,9 @@ async function envoyerProposition() {
   const c = toutesCommandes.find(x => x.cmd_id === cmdCompleterIdEnCours);
   if (!c) return;
 
+  const client    = document.getElementById('completer-client').value.trim();
+  const courriel  = document.getElementById('completer-courriel').value.trim();
+  const telephone = document.getElementById('completer-telephone').value.trim();
   const livraison = document.getElementById('completer-livraison').value;
   const note      = document.getElementById('completer-note').value;
   const square    = document.getElementById('completer-square').value;
@@ -825,12 +831,7 @@ async function envoyerProposition() {
 
   afficherChargement();
 
-  // On garde une trace dans les notes (en attendant des vrais champs dédiés)
-  const sep = c.notes ? '\n---\n' : '';
-  const notesComplet = (c.notes || '') + sep + 'Proposition envoyée le ' + new Date().toLocaleDateString('fr-CA') +
-    '\n- Livraison : ' + (livraison || '0') + ' $' +
-    '\n- Lien Square : ' + (square || '—') +
-    '\n- Note au client : ' + (note || '—');
+  const dateProposition = new Date().toLocaleDateString('fr-CA');
 
   const lignesPayload = toutesCommandesLignes.filter(l => l.cmd_id === cmdCompleterIdEnCours).map(l => ({
     pro_id: l.pro_id,
@@ -844,14 +845,17 @@ async function envoyerProposition() {
 
   const resUpdate = await appelAPIPost('updateCommandeComplete', {
     cmd_id: cmdCompleterIdEnCours,
-    client: c.client,
-    courriel: c.courriel,
-    telephone: c.telephone,
+    client: client,
+    courriel: courriel,
+    telephone: telephone,
     code_postal: c.code_postal,
     total_prevu: totalAvec,
     acompte: c.acompte || 0,
     solde: totalAvec - (c.acompte || 0),
-    notes: notesComplet,
+    note_proposition: note,
+    lien_square: square,
+    livraison: livraisonNum,
+    date_proposition: dateProposition,
     lignes: lignesPayload
   });
 
@@ -885,8 +889,8 @@ async function envoyerProposition() {
   });
 
   const resCourriel = await appelAPIPost('envoyerProposition', {
-    courriel: c.courriel,
-    client: c.client,
+    courriel: courriel,
+    client: client,
     numero: c.cmd_id,
     note: note,
     lien_square: square,
