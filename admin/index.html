@@ -793,7 +793,16 @@
                 </div>
                 <div class="form-groupe">
                   <div id="fg-rang-apercu" class="fiche-visuel-hex"></div>
+				  <select class="form-ctrl" id="fg-position" onchange="">
+                    <option value="0">En premier</option>
+                  </select>
                 </div>
+				
+				
+				
+				
+				
+				
               </div>
               <div class="form-grille">
                 <div class="form-groupe col-demi">
@@ -806,12 +815,7 @@
                     <option value="">— Choisir —</option>
                   </select>
                 </div>
-                <div class="form-groupe">
-                  <label class="form-label">Position</label>
-                  <select class="form-ctrl" id="fg-position" onchange="">
-                    <option value="0">En premier</option>
-                  </select>
-                </div>
+                
                 <input type="hidden" id="fg-rang">
                 <div class="form-groupe col-plein">
                   <label class="form-label">Slogan</label>
@@ -822,7 +826,7 @@
                   <textarea class="form-ctrl textarea-auto" id="fg-desc" rows="3" oninput="ajusterHauteurTextarea(this)"></textarea>
                 </div>
                 <input type="hidden" id="fg-photo-url">
-                <input type="hidden" id="fg-photo-noel-url">>
+                <input type="hidden" id="fg-photo-noel-url">
                 <div class="form-groupe col-plein">
                   <label class="form-label">Ingrédients de base</label>
                   <div id="liste-ingredients-base"></div>
