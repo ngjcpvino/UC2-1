@@ -213,6 +213,8 @@
    RESET
    ═══════════════════════════════════════ */
 * { margin: 0; padding: 0; box-sizing: border-box; }
+* { scrollbar-width: none; -ms-overflow-style: none; }
+*::-webkit-scrollbar { display: none; width: 0; height: 0; }
 html { scroll-behavior: smooth; }
 body {
   font-family: 'DM Sans', sans-serif;
