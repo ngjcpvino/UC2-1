@@ -586,6 +586,7 @@ async function voirDetailCommande(cmd_id) {
   if (c.statut === 'En attente de paiement') {
     actionsHTML += `<button class="bouton bouton-or" onclick="paiementRecu('${c.cmd_id}')">Paiement reçu</button>`;
     actionsHTML += `<button class="bouton bouton-contour" onclick="textoProposition('${c.cmd_id}')">Texto au client</button>`;
+    actionsHTML += `<button class="bouton" onclick="modifierProduitsCommande('${c.cmd_id}')">Modifier les produits</button>`;
     actionsHTML += `<button class="bouton bouton-rouge" onclick="annulerCommande('${c.cmd_id}')">Annuler la commande</button>`;
   }
   if (c.statut === 'À expédier') {
@@ -677,22 +678,41 @@ async function changerStatutCommande(cmd_id, nouveauStatut) {
 // ═══════════════════════════════════════
 // ANNULER UNE COMMANDE
 // ═══════════════════════════════════════
+function modifierProduitsCommande(cmd_id) {
+  confirmerAction('Modifier les produits ? Le stock de cette commande sera remis en inventaire et tu devras renvoyer une proposition corrigée. Continuer ?', async () => {
+    afficherChargement();
+    const res = await appelAPIPost('remettreStockCommande', { cmd_id, statut_apres: 'En attente' });
+    cacherChargement();
+    if (res && res.success) {
+      await modifierCommande(cmd_id);
+    } else {
+      afficherMsg('commandes', '❌ ' + (res?.message || 'Erreur lors de la remise en stock.'), 'erreur');
+    }
+  });
+}
+
 function annulerCommande(cmd_id) {
   const c = toutesCommandes.find(x => x.cmd_id === cmd_id);
-  let message = 'Annuler cette commande ?';
+  const stockSorti = c && c.statut === 'En attente de paiement';
+  let message = stockSorti
+    ? 'Annuler cette commande ? Le stock réservé sera remis en inventaire.'
+    : 'Annuler cette commande ?';
   if (c && c.acompte > 0) {
-    message = `⚠️ Un acompte de ${formaterPrix(c.acompte)} a été versé. Pensez à le rembourser au client avant d'annuler. Continuer ?`;
+    message = `⚠️ Un acompte de ${formaterPrix(c.acompte)} a été versé. Pensez à le rembourser au client avant d'annuler.`
+      + (stockSorti ? ' Le stock sera remis en inventaire.' : '') + ' Continuer ?';
   }
   confirmerAction(message, async () => {
     afficherChargement();
-    const res = await appelAPIPost('updateStatutCommande', { cmd_id, statut: 'Annulée' });
+    const res = stockSorti
+      ? await appelAPIPost('remettreStockCommande', { cmd_id, statut_apres: 'Annulée' })
+      : await appelAPIPost('updateStatutCommande', { cmd_id, statut: 'Annulée' });
     cacherChargement();
     if (res && res.success) {
       afficherMsg('commandes', '✅ Commande annulée.');
       fermerFicheCommande();
       chargerCommandes();
     } else {
-      afficherMsg('commandes', 'Erreur.', 'erreur');
+      afficherMsg('commandes', '❌ ' + (res?.message || 'Erreur.'), 'erreur');
     }
   });
 }
