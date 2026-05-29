@@ -351,7 +351,7 @@ main { padding-top: var(--nav-h); }
   font-size: 0.78rem;
   letter-spacing: 0.15em; text-transform: uppercase;
   font-weight: 500; cursor: pointer; border: none;
-  padding: 12px 28px; transition: background 0.2s;
+  padding: 10px 28px; transition: background 0.2s;
   text-decoration: none; background: var(--primary); color: white;
 }
 .bouton2 {
@@ -365,7 +365,7 @@ main { padding-top: var(--nav-h); }
   text-transform: uppercase;
   font-weight: 500; 
   cursor: pointer;
-  padding: 12px 28px; 
+  padding: 10px 28px; 
   transition: background 0.2s;
   text-decoration: none; 
   background: transparent; 
