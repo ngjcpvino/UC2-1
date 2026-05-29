@@ -174,10 +174,15 @@
         <button class="sidebar-lien" onclick="seDeconnecter()">déconnexion</button>
       </div>
     </aside>
-
-<!-- CONTENU -->
+<!--════════════════════════════════════════
+					CONTENU 
+	════════════════════════════════════════-->
     <main class="admin-contenu">
-<!-- ACCUEIL -->
+	
+
+<!--════════════════════════════════════════
+					ACCUEIL
+	════════════════════════════════════════-->
 	<div class="section-admin" id="section-accueil">
 		<div class="accueil-admin">
 			<div class="accueil-gauche">
@@ -188,13 +193,11 @@
 								<div class="hero-stat-num" id="admin-stat-collections">—</div>
 								<div class="hero-stat-label">Collections</div>
 							</div>
-													
 							<div>
 								<div class="hero-stat-num" id="hero-stat-univers">—</div>
 								<div class="hero-stat-label">Univers</div>
 							</div>
-		  
-							<div>
+		  					<div>
 								<div class="hero-stat-num" id="admin-stat-produits">—</div>
 								<div class="hero-stat-label">Produits</div>
 							</div>
@@ -268,8 +271,14 @@
       </div>
 	 </div>
 	  
-     <!-- COLLECTIONS — Liste, fiche et formulaire -->
-     <div class="section-admin visible" id="section-collections">
+
+<!--════════════════════════════════════════
+	COLLECTIONS — Liste, fiche et formulaire
+	════════════════════════════════════════-->
+    <!--════════════════════════════════════════
+				Entete COLLECTIONS
+		════════════════════════════════════════-->
+	  <div class="section-admin visible" id="section-collections">
         <div class="page-entete fade-in">
           <div>
             <div class="page-entete-eyebrow">Gérer les collections</div>
@@ -278,10 +287,10 @@
           <button class="bouton" id="btn-nouvelle-collection" onclick="ouvrirFormCollection()">+ Nouvelle collection</button>
         </div>
         <div class="msg-zone" id="msg-collections"></div>
-		
-		
-      <!-- COLLECTIONS — Fiche d'une collection -->
-       <div id="fiche-collection">
+	<!--════════════════════════════════════════
+				Fiche COLLECTIONS
+		════════════════════════════════════════-->	
+      <div id="fiche-collection">
 	   <div class="bandeau">
               <div class="fiche-bandeau" id="fiche-collection-bandeau">
                 <span class="form-panel-titre" id="fiche-collection-titre"></span>
@@ -289,8 +298,7 @@
               </div>
               <button class="btn-fermer-panneau" onclick="fermerFicheCollection()" title="Fermer">✕</button>
             </div>
-          
-          <div class="form-panel">
+         <div class="form-panel">
             <div class="form-body">
               <div id="fiche-collection-extras"></div>
               <p class="fiche-desc" id="fiche-collection-desc"></p>
@@ -303,54 +311,11 @@
 			<button class="bouton bouton-contour" onclick="fermerFicheCollection()">Fermer</button>
 			<button class="bouton" id="fiche-collection-modifier">Modifier cette collection</button>
 			<button class="bouton bouton-rouge" id="btn-supprimer-collection">Supprimer cette collection</button>
-              
-            </div>
+             </div>
           </div>
        </div>
 	   
-	   
-	   
-        <!-- ════════════════════════════════════════
-     COLLECTIONS — Fiche d'une gamme
-      ════════════════════════════════════════ -->
-      <div id="fiche-ligne" class="cache">
-         
-            <div class="bandeau">
-              <div class="fiche-bandeau" id="fiche-ligne-bandeau">
-                <span class="form-panel-titre" id="fiche-ligne-titre"></span>
-                <span class="fiche-slogan" id="fiche-ligne-format"></span>
-              </div>
-              <button class="btn-fermer-panneau" onclick="fermerFicheLigne()" title="Fermer">✕</button>
-            </div>
-        
-          <div class="form-panel">
-            <div class="form-body">
-              <div class="form-grille">
-                <div class="form-groupe">
-                  <label class="form-label">Collection</label>
-                  <div class="form-valeur" id="fiche-ligne-collection"></div>
-                </div>
-              </div>
-              <div class="form-groupe">
-                <label class="form-label">Description de la gamme</label>
-                <div class="form-valeur" id="fiche-ligne-desc"></div>
-              </div>
-              <div class="form-groupe">
-                <label class="form-label">Ingrédients de base</label>
-                <div id="fiche-ligne-ingredients"></div>
-              </div>
-            </div>
-          </div>
-          <div class="form-panel bandeau">
-            <div class="form-actions">
-              <button class="bouton" id="fiche-ligne-modifier">Modifier cette gamme</button>
-              <button class="bouton bouton-rouge" id="btn-supprimer-ligne-fiche">Supprimer cette gamme</button>
-            </div>
-          </div>
-        </div>
-		
-		
-		<!-- ════════════════════════════════════════
+	   	<!-- ════════════════════════════════════════
      COLLECTIONS — Formulaire nouvelle/modifier collection
    -->
 		<div id="form-collections" class="cache">
@@ -415,6 +380,48 @@
 		
 		
 		
+	   
+        <!-- ════════════════════════════════════════
+     COLLECTIONS — Fiche d'une gamme
+      ════════════════════════════════════════ -->
+      <div id="fiche-ligne" class="cache">
+         
+            <div class="bandeau">
+              <div class="fiche-bandeau" id="fiche-ligne-bandeau">
+                <span class="form-panel-titre" id="fiche-ligne-titre"></span>
+                <span class="fiche-slogan" id="fiche-ligne-format"></span>
+              </div>
+              <button class="btn-fermer-panneau" onclick="fermerFicheLigne()" title="Fermer">✕</button>
+            </div>
+        
+          <div class="form-panel">
+            <div class="form-body">
+              <div class="form-grille">
+                <div class="form-groupe">
+                  <label class="form-label">Collection</label>
+                  <div class="form-valeur" id="fiche-ligne-collection"></div>
+                </div>
+              </div>
+              <div class="form-groupe">
+                <label class="form-label">Description de la gamme</label>
+                <div class="form-valeur" id="fiche-ligne-desc"></div>
+              </div>
+              <div class="form-groupe">
+                <label class="form-label">Ingrédients de base</label>
+                <div id="fiche-ligne-ingredients"></div>
+              </div>
+            </div>
+          </div>
+          <div class="form-panel bandeau">
+            <div class="form-actions">
+              <button class="bouton" id="fiche-ligne-modifier">Modifier cette gamme</button>
+              <button class="bouton bouton-rouge" id="btn-supprimer-ligne-fiche">Supprimer cette gamme</button>
+            </div>
+          </div>
+        </div>
+		
+		
+	
 		
       <!-- ════════════════════════════════════════
      COLLECTIONS — Liste des collections
