@@ -367,39 +367,37 @@
             <input type="hidden" id="fc-rowIndex">
             <input type="hidden" id="fc-mode" value="collection">
             <div id="fc-bloc-collection">
-            <div class="form-grille">
-              <div class="form-groupe col-petit">
-                <label class="form-label">Position</label>
+            <input type="hidden" id="fc-rang">
+            <div class="fiche-visuel">
+              <div class="form-groupe">
+                <input type="hidden" id="fc-photo-url">
+                <div id="fc-photo-preview" class="fiche-visuel-photo"></div>
+                <button type="button" class="bouton bouton-vert-pale bouton-petit" onclick="ouvrirMediatheque('fc-photo-url', 'fc-photo-preview', 'Collection')">Médiathèque</button>
+              </div>
+              <div class="form-groupe">
+                <input type="hidden" id="fc-photo-url-noel">
+                <div id="fc-photo-preview-noel" class="fiche-visuel-photo"></div>
+                <button type="button" class="bouton bouton-vert-pale bouton-petit" onclick="ouvrirMediatheque('fc-photo-url-noel', 'fc-photo-preview-noel', 'Collection Noël')">Médiathèque</button>
+              </div>
+              <div class="form-groupe">
+                <div id="fc-rang-apercu" class="fiche-visuel-hex"></div>
                 <select class="form-ctrl" id="fc-position">
                   <option value="0">En premier</option>
                 </select>
               </div>
-              <input type="hidden" id="fc-rang">
+            </div>
+            <div class="form-grille">
               <div class="form-groupe">
                 <label class="form-label">Collection</label>
                 <input type="text" class="form-ctrl" id="fc-collection">
               </div>
-              <div class="form-groupe col-plein">
+              <div class="form-groupe">
                 <label class="form-label">Slogan</label>
                 <input type="text" class="form-ctrl" id="fc-slogan">
               </div>
               <div class="form-groupe col-plein">
                 <label class="form-label">Description collection</label>
                 <textarea class="form-ctrl textarea-auto" id="fc-desc-col" rows="5" oninput="ajusterHauteurTextarea(this)"></textarea>
-              </div>
-              
-            
-                <div class="form-groupe col-plein">
-                <label class="form-label">Photo collection</label>
-                <input type="hidden" id="fc-photo-url">
-                <div id="fc-photo-preview"></div>
-                <button type="button" class="bouton bouton-vert-pale bouton-petit" onclick="ouvrirMediatheque('fc-photo-url', 'fc-photo-preview', 'Collection')">Médiathèque</button>
-              </div>
-              <div class="form-groupe col-plein">
-                <label class="form-label">Photo collection — saisonnière</label>
-                <input type="hidden" id="fc-photo-url-noel">
-                <div id="fc-photo-preview-noel"></div>
-                <button type="button" class="bouton bouton-vert-pale bouton-petit" onclick="ouvrirMediatheque('fc-photo-url-noel', 'fc-photo-preview-noel', 'Collection Noël')">Médiathèque</button>
               </div>
             </div>
             </div>

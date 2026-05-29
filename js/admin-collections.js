@@ -171,9 +171,15 @@ async function modifierCollection(col_id) {
   if (document.getElementById('fc-couleur-hex')) apercuCouleurCollection(document.getElementById('fc-couleur-hex'));
   document.getElementById('fc-photo-url').value        = col.photo_url || '';
   const preview = document.getElementById('fc-photo-preview');
-  if (preview) preview.innerHTML = col.photo_url ? `<img src="${col.photo_url}" class="photo-preview">` : '';
+  if (preview) preview.innerHTML = col.photo_url ? `<img src="${col.photo_url}">` : '';
   const previewNoel = document.getElementById('fc-photo-preview-noel');
-  if (previewNoel) previewNoel.innerHTML = col.photo_noel_url ? `<img src="${col.photo_noel_url}" class="photo-preview">` : '';
+  if (previewNoel) previewNoel.innerHTML = col.photo_noel_url ? `<img src="${col.photo_noel_url}">` : '';
+  const rangApercu = document.getElementById('fc-rang-apercu');
+  if (rangApercu) {
+    const couleurs = couleurCollection(col.nom, col.couleur_hex);
+    rangApercu.style.background = `linear-gradient(145deg,${couleurs[0]},${couleurs[1]})`;
+    rangApercu.innerHTML = `<span class="fiche-visuel-rang">${col.rang || ''}</span>`;
+  }
    document.getElementById('contenu-collections').classList.add('cache');
   document.getElementById('btn-nouvelle-collection').classList.add('cache');
   document.getElementById('form-collections').classList.remove('cache');
