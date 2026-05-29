@@ -1130,6 +1130,7 @@ tr.cliquable { cursor: pointer; }
 .nav-dropdown-item {
     display: block;
     width: 100%;
+	white-space: nowrap;
     padding: 11px 20px;
     font-family: 'Birthstone', cursive;
     font-size: var(--texte-160);
