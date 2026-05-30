@@ -2426,7 +2426,7 @@ tr:has(+ .ven-resume-row) td {
   text-transform: uppercase;
   color: var(--primary);
   display: block;
-  margin-bottom: 8px;
+  margin-top: 6px;
   font-weight: 550;
 }
 .fiches-ctrl {
