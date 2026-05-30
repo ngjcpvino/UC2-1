@@ -292,25 +292,25 @@
 		════════════════════════════════════════-->	
       <div id="fiche-collection">
 	   <div class="bandeau">
-              <div class="fiche-bandeau" id="fiche-collection-bandeau">
-                <span class="form-panel-titre" id="fiche-collection-titre"></span>
-                <span class="fiche-slogan" id="fiche-collection-slogan"></span>
+              <div class="fiches-bandeau" id="fiche-collection-bandeau">
+                <span class="fiches-titre" id="fiche-collection-titre"></span>
+               <span class="fiches-slogan" id="fiche-collection-slogan"></span>
               </div>
-              <button class="btn-fermer-panneau" onclick="fermerFicheCollection()" title="Fermer">✕</button>
+              <button class="boutons-fermer" onclick="fermerFicheCollection()" title="Fermer">✕</button>
             </div>
-         <div class="form-panel">
-            <div class="form-body">
+         <div class="fiches-central">
+            <div class="fiches-central-corps">
               <div id="fiche-collection-extras"></div>
-              <p class="fiche-desc" id="fiche-collection-desc"></p>
-              <div class="section-label">Gammes de produits</div>
+              <p class="fiches-desc" id="fiche-collection-desc"></p>
+              <div class="fiches-section-label">Gammes de produits</div>
               <div id="fiche-collection-lignes"></div>
             </div>
           </div>
-          <div class="form-panel bandeau">
-			<div class="form-actions">
-			<button class="bouton bouton-contour" onclick="fermerFicheCollection()">Fermer</button>
-			<button class="bouton" id="fiche-collection-modifier">Modifier cette collection</button>
-			<button class="bouton bouton-rouge" id="btn-supprimer-collection">Supprimer cette collection</button>
+         <div class="bandeau">
+			<div class="fiches-actions">
+			<button class="boutons boutons-contour" onclick="fermerFicheCollection()">Fermer</button>
+			<button class="boutons boutons-vert" id="fiche-collection-modifier">Modifier cette collection</button>
+			<button class="boutons boutons-rouge" id="btn-supprimer-collection">Supprimer cette collection</button>
              </div>
           </div>
        </div>
@@ -387,35 +387,35 @@
       <div id="fiche-ligne" class="cache">
          
             <div class="bandeau">
-              <div class="fiche-bandeau" id="fiche-ligne-bandeau">
-                <span class="form-panel-titre" id="fiche-ligne-titre"></span>
-                <span class="fiche-slogan" id="fiche-ligne-format"></span>
+              <div class="fiches-bandeau" id="fiche-ligne-bandeau">
+                <span class="fiches-titre" id="fiche-ligne-titre"></span>
+                <span class="fiches-slogan" id="fiche-ligne-format"></span>
               </div>
-              <button class="btn-fermer-panneau" onclick="fermerFicheLigne()" title="Fermer">✕</button>
+              <button class="boutons-fermer" onclick="fermerFicheLigne()" title="Fermer">✕</button>
             </div>
         
-          <div class="form-panel">
-            <div class="form-body">
-              <div class="form-grille">
-                <div class="form-groupe">
-                  <label class="form-label">Collection</label>
+          <div class="fiches-central">
+            <div class="fiches-central-corps">
+              <div class="fiches-grille">
+                <div class="fiches-champ">
+                  <label class="fiches-label">Collection</label>
                   <div class="form-valeur" id="fiche-ligne-collection"></div>
                 </div>
               </div>
-              <div class="form-groupe">
-                <label class="form-label">Description de la gamme</label>
+              <div class="fiches-champ">
+                <label class="fiches-label">Description de la gamme</label>
                 <div class="form-valeur" id="fiche-ligne-desc"></div>
               </div>
-              <div class="form-groupe">
-                <label class="form-label">Ingrédients de base</label>
+              <div class="fiches-champ">
+                <label class="fiches-label">Ingrédients de base</label>
                 <div id="fiche-ligne-ingredients"></div>
               </div>
             </div>
           </div>
-          <div class="form-panel bandeau">
-            <div class="form-actions">
-              <button class="bouton" id="fiche-ligne-modifier">Modifier cette gamme</button>
-              <button class="bouton bouton-rouge" id="btn-supprimer-ligne-fiche">Supprimer cette gamme</button>
+          <div class="bandeau">
+            <div class="fiches-actions">
+              <button class="boutons boutons-vert" id="fiche-ligne-modifier">Modifier cette gamme</button>
+              <button class="boutons boutons-rouge" id="btn-supprimer-ligne-fiche">Supprimer cette gamme</button>
             </div>
           </div>
         </div>
