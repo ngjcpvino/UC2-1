@@ -248,7 +248,7 @@ function modifierRegroupement(fra_id) {
   const fra = donneesRegroupements.find(f => f.fra_id === fra_id);
   console.log('fra trouvé:', fra);
   if (!fra) return;
-  document.getElementById('form-regroupements-titre').textContent      = 'Modifier le regroupement';
+  document.getElementById('form-regroupements-titre').textContent      = 'Modifier l'univers';
   document.getElementById('freg-id').value                             = fra.fra_id;
   document.getElementById('freg-nom').value                            = fra.nom || '';
   document.getElementById('freg-slogan').value                         = fra.slogan || '';
