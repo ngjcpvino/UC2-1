@@ -321,58 +321,58 @@
 		<div id="form-collections" class="cache">
         
             <div class="bandeau">
-              <div class="fiche-bandeau" id="form-collections-bandeau">
-                <span class="form-panel-titre" id="form-collections-titre">Nouvelle collection</span>
+              <div class="fiches-bandeau" id="form-collections-bandeau">
+                <span class="fiches-titre" id="form-collections-titre">Nouvelle collection</span>
               </div>
-              <button class="btn-fermer-panneau" onclick="fermerFormCollection()" title="Fermer">✕</button>
+              <button class="boutons-fermer" onclick="fermerFormCollection()" title="Fermer">✕</button>
             </div>
           
-          <div class="form-panel">
-            <div class="form-body">
+          <div class="fiches-central">
+            <div class="fiches-central-corps">
             <input type="hidden" id="fc-rowIndex">
             <input type="hidden" id="fc-mode" value="collection">
             <div id="fc-bloc-collection">
             <input type="hidden" id="fc-rang">
-            <div class="fiche-visuel">
-              <div class="form-groupe">
+            <div class="fiches-visuel">
+              <div class="fiches-champ">
                 <input type="hidden" id="fc-photo-url">
-                <div id="fc-photo-preview" class="fiche-visuel-photo"></div>
-                <button type="button" class="bouton" onclick="ouvrirMediatheque('fc-photo-url', 'fc-photo-preview', 'Collection')">Médiathèque</button>
+                <div id="fc-photo-preview" class="fiches-visuel-photo"></div>
+                <button type="button" class="boutons boutons-vert" onclick="ouvrirMediatheque('fc-photo-url', 'fc-photo-preview', 'Collection')">Médiathèque</button>
               </div>
-              <div class="form-groupe">
+              <div class="fiches-champ">
                 <input type="hidden" id="fc-photo-url-noel">
-                <div id="fc-photo-preview-noel" class="fiche-visuel-photo"></div>
-                <button type="button" class="bouton" onclick="ouvrirMediatheque('fc-photo-url-noel', 'fc-photo-preview-noel', 'Collection Noël')">Médiathèque</button>
+                <div id="fc-photo-preview-noel" class="fiches-visuel-photo"></div>
+                <button type="button" class="boutons boutons-vert" onclick="ouvrirMediatheque('fc-photo-url-noel', 'fc-photo-preview-noel', 'Collection Noël')">Médiathèque</button>
               </div>
-              <div class="form-groupe">
-                <div id="fc-rang-apercu" class="fiche-visuel-hex"></div>
-                <select class="form-ctrl" id="fc-position">
+              <div class="fiches-champ">
+                <div id="fc-rang-apercu" class="fiches-visuel-hex"></div>
+                <select class="fiches-ctrl" id="fc-position">
                   <option value="0">En premier</option>
                 </select>
               </div>
             </div>
-            <div class="form-grille">
-              <div class="form-groupe">
-                <label class="form-label">Collection</label>
-                <input type="text" class="form-ctrl" id="fc-collection">
+            <div class="fiches-grille">
+              <div class="fiches-champ">
+                <label class="fiches-label">Collection</label>
+                <input type="text" class="fiches-ctrl" id="fc-collection">
               </div>
-              <div class="form-groupe">
-                <label class="form-label">Slogan</label>
-                <input type="text" class="form-ctrl" id="fc-slogan">
+              <div class="fiches-champ">
+                <label class="fiches-label">Slogan</label>
+                <input type="text" class="fiches-ctrl" id="fc-slogan">
               </div>
-              <div class="form-groupe col-plein">
-                <label class="form-label">Description collection</label>
-                <textarea class="form-ctrl textarea-auto" id="fc-desc-col" rows="5" oninput="ajusterHauteurTextarea(this)"></textarea>
+              <div class="fiches-champ fiches-champ-plein">
+                <label class="fiches-label">Description collection</label>
+                <textarea class="fiches-ctrl textarea-auto" id="fc-desc-col" rows="5" oninput="ajusterHauteurTextarea(this)"></textarea>
               </div>
             </div>
             </div>
             <div id="fc-bloc-ligne" class="cache"></div>
           </div>
           </div>
-          <div class="form-panel bandeau">
-            <div class="form-actions">
-              <button class="bouton bouton-contour" onclick="fermerFormCollection()">Annuler</button>
-			  <button class="bouton" onclick="sauvegarderCollection()">Enregistrer</button>
+          <div class="bandeau">
+            <div class="fiches-actions">
+              <button class="boutons boutons-contour" onclick="fermerFormCollection()">Annuler</button>
+			  <button class="boutons boutons-vert" onclick="sauvegarderCollection()">Enregistrer</button>
               
             </div>
           </div>

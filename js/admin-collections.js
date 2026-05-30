@@ -189,7 +189,7 @@ async function modifierCollection(col_id) {
 
 async function sauvegarderCollection() {
   afficherChargement();
-  const btnSauvegarder = document.querySelector('#form-collections .form-body-actions .bouton');
+  const btnSauvegarder = document.querySelector('#form-collections .bandeau .boutons-vert');
   if (btnSauvegarder) { btnSauvegarder.disabled = true; btnSauvegarder.innerHTML = 'Sauvegarde…'; }
   const rowIndex = document.getElementById('fc-rowIndex').value;
   const mode     = document.getElementById('fc-mode').value;
