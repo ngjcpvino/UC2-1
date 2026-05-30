@@ -73,7 +73,7 @@ function ouvrirFicheGamme2(gam_id) {
   if (elIngs) {
     appelAPI('getGammesIngredients', { gam_id }).then(res => {
       const ings = (res && res.success) ? res.items : [];
-      if (!ings.length) { elIngs.innerHTML = '<p class="texte-secondaire">Aucun ingrédient</p>'; return; }
+      if (!ings.length) { elIngs.innerHTML = '<p class="textes-discrets">Aucun ingrédient</p>'; return; }
       elIngs.innerHTML = ings.map(i => `<div class="fiche-ingredient"><span class="fiche-ing-nom">${i.nom_ingredient || ''}</span><span class="fiche-ing-qte">${i.quantite_g || 0} g</span></div>`).join('');
     });
   }
@@ -226,7 +226,7 @@ async function ouvrirFicheGamme(gam_id) {
     modifierGamme(gam_id);
   };
   document.getElementById('btn-supprimer-ligne-fiche').onclick = () => supprimerGamme(gam_id);
-  document.getElementById('fiche-ligne-ingredients').innerHTML  = '<span class="form-valeur">—</span>';
+  document.getElementById('fiche-ligne-ingredients').innerHTML  = '<span class="fiches-valeur">—</span>';
   document.getElementById('fiche-collection').classList.remove('visible');
   document.getElementById('fiche-ligne').classList.remove('cache');
   document.getElementById('contenu-collections').classList.add('cache');

@@ -2246,6 +2246,46 @@ tr:has(+ .ven-resume-row) td {
    Du générique et ses variantes
    ════════════════════════════════════════════════════════════════════════════════════════════════════════════════ */
 
+.textes-discrets {
+  color: var(--gris);
+  font-size: 0.85em;
+}
+.casesacocher {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 24px;
+  padding: 8px 0;
+}
+.casesacocher label {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  cursor: pointer;
+  font-size: 0.95rem;
+}
+.casesacocher input[type="checkbox"] {
+  width: 16px;
+  height: 16px;
+  cursor: pointer;
+  accent-color: var(--primary);
+}
+.champ-demi {
+  grid-column: span 1;
+}
+.champ-petit {
+  max-width: 120px;
+}
+textarea.zonedetexte {
+  resize: none;
+  overflow: hidden;
+}
+
+
+
+
+
+
+
 /* ═══════════════════════════════════════
    BOUTONS — base + variantes
    ═══════════════════════════════════════ */
@@ -2294,6 +2334,13 @@ tr:has(+ .ven-resume-row) td {
   font-size: 1.6rem;
   color: var(--gris);
   padding: 8px 12px;
+}
+.boutons-petit {
+  padding: 10px 16px;
+  font-size: 0.68rem;
+}
+.bouton-ajout {
+  margin-top: 8px;
 }
 
 /* ═══════════════════════════════════════
@@ -2371,6 +2418,12 @@ tr:has(+ .ven-resume-row) td {
   padding-bottom: 8px;
   border-bottom: 1px solid var(--beige);
   margin-top: 24px;
+}
+.fiches-valeur {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.95rem;
+  color: var(--gris-fonce);
+  padding: 4px 0;
 }
 .fiches-item {
   display: flex;

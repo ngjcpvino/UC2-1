@@ -74,10 +74,10 @@ function ouvrirFicheRegroupement(fra_id) {
     ? produitsDuRegroupement.map(p => p.nom).join(' — ')
     : 'Aucun produit';
   let wrapHtml = '';
-  if (fra.photo_url)      wrapHtml += `<img src="${fra.photo_url}" class="fiche-visuel-photo">`;
-  if (fra.photo_noel_url) wrapHtml += `<img src="${fra.photo_noel_url}" class="fiche-visuel-photo">`;
+  if (fra.photo_url)      wrapHtml += `<img src="${fra.photo_url}" class="fiches-visuel-photo">`;
+  if (fra.photo_noel_url) wrapHtml += `<img src="${fra.photo_noel_url}" class="fiches-visuel-photo">`;
   const ficheExtras = document.getElementById('fiche-regroupement-extras');
-  if (ficheExtras) ficheExtras.innerHTML = wrapHtml ? `<div class="fiche-visuel">${wrapHtml}</div>` : '';
+  if (ficheExtras) ficheExtras.innerHTML = wrapHtml ? `<div class="fiches-visuel">${wrapHtml}</div>` : '';
   document.getElementById('fiche-regroupement-modifier').onclick = () => { console.log('modifier cliqué', fra_id); fermerFicheRegroupement(); modifierRegroupement(fra_id); };
   document.getElementById('btn-supprimer-regroupement').onclick  = () => supprimerRegroupement(fra_id);
   document.getElementById('contenu-regroupements').classList.add('cache');
@@ -241,9 +241,9 @@ function modifierRegroupement(fra_id) {
   document.getElementById('freg-photo-url').value                      = fra.photo_url || '';
   document.getElementById('freg-photo-noel-url').value                 = fra.photo_noel_url || '';
   const previewMain = document.getElementById('freg-photo-preview');
-  if (previewMain) previewMain.innerHTML = fra.photo_url ? `<img src="${fra.photo_url}" class="photo-preview">` : '';
+  if (previewMain) previewMain.innerHTML = fra.photo_url ? `<img src="${fra.photo_url}">` : '';
   const previewNoel = document.getElementById('freg-photo-noel-preview');
-  if (previewNoel) previewNoel.innerHTML = fra.photo_noel_url ? `<img src="${fra.photo_noel_url}" class="photo-preview">` : '';
+  if (previewNoel) previewNoel.innerHTML = fra.photo_noel_url ? `<img src="${fra.photo_noel_url}">` : '';
   const selCat = document.getElementById('freg-cat');
   selCat.innerHTML = '<option value="">— Choisir —</option>';
   Object.keys(listesDropdown.categoriesMap || {}).sort((a,b) => (listesDropdown.categoriesMap[a]||'').localeCompare(listesDropdown.categoriesMap[b]||'','fr')).forEach(k => {

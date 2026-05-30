@@ -121,3 +121,80 @@ Les JS injectent des classes qui devront correspondre aux nouveaux noms `.fiches
 
 Petit conseil pour que ça se passe encore mieux la prochaine fois : garde aussi tes fichiers (HTML, CSS, les 5 JS) à portée, et précise dès le départ « on en est à brancher le HTML de la fiche consultation collection ». Comme ça on saute les préliminaires.
 Bon courage pour la suite — le plus dur (créer la base générique propre) est déjà fait.
+
+
+mise a jour du 30 mai 2026
+
+# Suivi — Migration CSS générique (Univers Caresse)
+
+## Correspondances : ancien → générique
+
+| Ancienne classe          | Classe générique        | Type        |
+|--------------------------|-------------------------|-------------|
+| `.fiche-bandeau`         | `.fiches-bandeau`       | fiche       |
+| `.form-panel-titre` (titre fiche) | `.fiches-titre` | fiche       |
+| `.fiche-slogan`          | `.fiches-slogan`        | fiche       |
+| `.btn-fermer-panneau` (✕)| `.boutons-fermer`       | bouton      |
+| `.form-panel` (bloc central) | `.fiches-central`   | fiche       |
+| `.form-body`             | `.fiches-central-corps` | fiche       |
+| `.fiche-desc`            | `.fiches-desc`          | fiche       |
+| `.section-label`         | `.fiches-section-label` | fiche       |
+| `.form-actions`          | `.fiches-actions`       | fiche       |
+| `.form-valeur`           | `.fiches-valeur`        | fiche       |
+| `.form-grille`           | `.fiches-grille`        | fiche       |
+| `.form-groupe`           | `.fiches-champ`         | fiche       |
+| `.col-plein`             | `.fiches-champ-plein`   | fiche       |
+| `.form-label`            | `.fiches-label`         | fiche       |
+| `.form-ctrl`             | `.fiches-ctrl`          | fiche       |
+| `.fiche-visuel`          | `.fiches-visuel`        | fiche       |
+| `.fiche-visuel-photo`    | `.fiches-visuel-photo`  | fiche       |
+| `.fiche-visuel-hex`      | `.fiches-visuel-hex`    | fiche       |
+| `.fiche-visuel-rang`     | `.fiches-visuel-rang`   | fiche       |
+| `.bouton`                | `.boutons`              | bouton      |
+| `.bouton` (vert)         | `.boutons-vert`         | bouton      |
+| `.bouton-contour`        | `.boutons-contour`      | bouton      |
+| `.bouton-rouge`          | `.boutons-rouge`        | bouton      |
+| `.bouton-or`             | `.boutons-accent`       | bouton      |
+| `.bouton-vert-pale`      | `.boutons-gris`         | bouton      |
+| `.bouton-petit`          | `.boutons-petit`        | bouton      |
+| `.texte-secondaire`      | `.textes-discrets`      | utilitaire  |
+| `.checkboxes-groupe`     | `.casesacocher`         | utilitaire  |
+| `.col-demi`              | `.champ-demi`           | utilitaire  |
+| `.col-petit`             | `.champ-petit`          | utilitaire  |
+| `.textarea-auto`         | `.zonedetexte`          | utilitaire  |
+| `.btn-ajouter-ingredient`| `.bouton-ajout`         | utilitaire  |
+| `.photo-preview`         | (supprimée — la div parent gère) | nettoyage |
+
+## État d'avancement par section
+
+| Section            | HTML | JS  | Utilitaires basculés |
+|--------------------|------|-----|----------------------|
+| Collections        | ✅   | ✅  | ✅                   |
+| Gammes             | ✅   | ✅* | ✅                   |
+| Familles           | ✅   | ✅  | ✅                   |
+| Univers            | ✅   | ✅  | ✅                   |
+| Produits           | ❌   | ❌  | ❌                   |
+| Factures / achats  | ❌   | ❌  | ❌                   |
+| Ventes             | ❌   | ❌  | ❌                   |
+| Commandes          | ❌   | ❌  | ❌                   |
+| Remboursements     | ❌   | ❌  | ❌                   |
+| Fabrication        | ❌   | ❌  | ❌                   |
+| Contenu site       | ❌   | ❌  | ❌                   |
+| Rédaction          | ❌   | ❌  | ❌                   |
+| Densités           | ❌   | ❌  | ❌                   |
+| Promotions         | ❌   | ❌  | ❌                   |
+| INCI / Médiathèque / Catalogue | ❌ | ❌ | ❌            |
+
+\* Gammes JS : tout migré sauf les rangées d'ingrédients (`ingredient-rangee`, `ing-type`, `ing-nom`, `ing-inci`, `ing-qte`) — classes partagées avec Produits, pas encore migrées.
+
+## Ce qui reste à faire
+
+1. Migrer les sections non faites (Produits, Factures, Ventes, etc.) vers le générique.
+2. Créer un générique pour les rangées d'ingrédients (`ingredient-rangee`, `ing-*`), partagé Gammes + Produits.
+3. **Ménage final CSS** — supprimer les anciens blocs devenus orphelins UNIQUEMENT quand plus aucune section ne les utilise :
+   - `.fiche-bandeau`, `.fiche-slogan`, `.fiche-desc`, `.section-label`
+   - `.fiche-visuel*`, `#form-collections .fiche-visuel...`
+   - `.photo-preview`, `.form-valeur`
+   - doublon `.bandeau` (commenté « à effacer »)
+   - `.bouton*`, `.form-panel*`, `.form-groupe`, `.form-label`, `.form-ctrl`, `.form-grille`, `.col-*`, `.texte-secondaire`, `.checkboxes-groupe`, `.textarea-auto`, `.btn-ajouter-ingredient`
+4. Auditer `admin.js` (jamais reçu) pour styles de mise en page en dur.

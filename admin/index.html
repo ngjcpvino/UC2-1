@@ -362,7 +362,7 @@
               </div>
               <div class="fiches-champ fiches-champ-plein">
                 <label class="fiches-label">Description collection</label>
-                <textarea class="fiches-ctrl textarea-auto" id="fc-desc-col" rows="5" oninput="ajusterHauteurTextarea(this)"></textarea>
+                <textarea class="fiches-ctrl zonedetexte" id="fc-desc-col" rows="5" oninput="ajusterHauteurTextarea(this)"></textarea>
               </div>
             </div>
             </div>
@@ -399,12 +399,12 @@
               <div class="fiches-grille">
                 <div class="fiches-champ">
                   <label class="fiches-label">Collection</label>
-                  <div class="form-valeur" id="fiche-ligne-collection"></div>
+                  <div class="fiches-valeur" id="fiche-ligne-collection"></div>
                 </div>
               </div>
               <div class="fiches-champ">
                 <label class="fiches-label">Description de la gamme</label>
-                <div class="form-valeur" id="fiche-ligne-desc"></div>
+                <div class="fiches-valeur" id="fiche-ligne-desc"></div>
               </div>
               <div class="fiches-champ">
                 <label class="fiches-label">Ingrédients de base</label>
@@ -460,14 +460,6 @@
         <div id="fiche-famille" class="cache">
         
             <div class="bandeau">
-              <div class="fiche-bandeau" id="fiche-famille-bandeau">
-                <span class="form-panel-titre" id="fiche-famille-titre"></span>
-                <span class="fiche-slogan" id="fiche-famille-slogan"></span>
-              </div>
-              <button class="btn-fermer-panneau" onclick="fermerFicheFamille()" title="Fermer">✕</button>
-            </div>
-        
-         <div class="bandeau">
               <div class="fiches-bandeau" id="fiche-famille-bandeau">
                 <span class="fiches-titre" id="fiche-famille-titre"></span>
                 <span class="fiches-slogan" id="fiche-famille-slogan"></span>
@@ -480,7 +472,7 @@
               <div id="fiche-famille-extras"></div>
               <p class="fiches-desc" id="fiche-famille-desc"></p>
               <div class="fiches-section-label">Collection</div>
-              <div class="form-valeur" id="fiche-famille-collection"></div>
+              <div class="fiches-valeur" id="fiche-famille-collection"></div>
             </div>
           </div>
           <div class="bandeau">
@@ -528,15 +520,15 @@
                     <option value="">— Aucune —</option>
                   </select>
                 </div>
-                <div class="fiches-champ col-petit">
-                  <label class="fiches-label">Position</label>
+                <div class="fiches-champ champ-demi">
+            <label class="fiches-label">Nom</label>
                   <select class="fiches-ctrl" id="ff-position">
                     <option value="0">En premier</option>
                   </select>
                 </div>
                 <div class="fiches-champ fiches-champ-plein">
                   <label class="fiches-label">Description</label>
-                  <textarea class="fiches-ctrl textarea-auto" id="ff-desc" rows="3" oninput="ajusterHauteurTextarea(this)"></textarea>
+                  <textarea class="fiches-ctrl zonedetexte" id="ff-desc" rows="3" oninput="ajusterHauteurTextarea(this)"></textarea>
                 </div>
                
               </div>
@@ -579,40 +571,40 @@
    <!-- FICHE D'UN REGROUPEMENT -->
   <div id="fiche-regroupement" class="cache">
   
-      <div class="bandeau">
-        <div class="fiche-bandeau" id="fiche-regroupement-bandeau">
-          <span class="form-panel-titre" id="fiche-regroupement-titre"></span>
-          <span class="fiche-slogan" id="fiche-regroupement-slogan"></span>
+     <div class="bandeau">
+        <div class="fiches-bandeau" id="fiche-regroupement-bandeau">
+          <span class="fiches-titre" id="fiche-regroupement-titre"></span>
+          <span class="fiches-slogan" id="fiche-regroupement-slogan"></span>
         </div>
-        <button class="btn-fermer-panneau" onclick="fermerFicheRegroupement()" title="Fermer">✕</button>
+        <button class="boutons-fermer" onclick="fermerFicheRegroupement()" title="Fermer">✕</button>
       
     </div>
 	
-    <div class="form-panel visible">
-      <div class="form-body">
+    <div class="fiches-central">
+      <div class="fiches-central-corps">
         <div id="fiche-regroupement-extras"></div>
-        <p class="fiche-desc" id="fiche-regroupement-desc"></p>
-        <div class="section-label">Mode</div>
-        <div class="form-valeur" id="fiche-regroupement-mode"></div>
-        <div class="section-label">Catégorie UC</div>
-        <div class="form-valeur" id="fiche-regroupement-categorie"></div>
-        <div class="section-label">Ingrédient</div>
-        <div class="form-valeur" id="fiche-regroupement-ingredient"></div>
-        <div class="section-label">Catégories exclues</div>
-        <div class="form-valeur" id="fiche-regroupement-cat-exclues"></div>
-        <div class="section-label">Collections exclues</div>
-        <div class="form-valeur" id="fiche-regroupement-col-exclues"></div>
-        <div class="section-label">Gammes exclues</div>
-        <div class="form-valeur" id="fiche-regroupement-gam-exclues"></div>
-        <div class="section-label">Produits associés</div>
-        <p class="texte-secondaire" id="fiche-regroupement-produits"></p>
+        <p class="fiches-desc" id="fiche-regroupement-desc"></p>
+        <div class="fiches-section-label">Mode</div>
+        <div class="fiches-valeur" id="fiche-regroupement-mode"></div>
+        <div class="fiches-section-label">Catégorie UC</div>
+        <div class="fiches-valeur" id="fiche-regroupement-categorie"></div>
+        <div class="fiches-section-label">Ingrédient</div>
+        <div class="fiches-valeur" id="fiche-regroupement-ingredient"></div>
+        <div class="fiches-section-label">Catégories exclues</div>
+        <div class="fiches-valeur" id="fiche-regroupement-cat-exclues"></div>
+        <div class="fiches-section-label">Collections exclues</div>
+        <div class="fiches-valeur" id="fiche-regroupement-col-exclues"></div>
+        <div class="fiches-section-label">Gammes exclues</div>
+        <div class="fiches-valeur" id="fiche-regroupement-gam-exclues"></div>
+        <div class="fiches-section-label">Produits associés</div>
+        <p class="textes-discrets" id="fiche-regroupement-produits"></p>
       </div>
     </div>
-    <div class="form-panel bandeau visible">
-      <div class="form-actions">
-        <button class="bouton bouton-contour" onclick="fermerFicheRegroupement()">Fermer</button>
-        <button class="bouton" id="fiche-regroupement-modifier">Modifier cet univers</button>
-        <button class="bouton bouton-rouge" id="btn-supprimer-regroupement">Supprimer cet univers</button>
+    <div class="bandeau">
+      <div class="fiches-actions">
+        <button class="boutons boutons-contour" onclick="fermerFicheRegroupement()">Fermer</button>
+        <button class="boutons boutons-vert" id="fiche-regroupement-modifier">Modifier cet univers</button>
+        <button class="boutons boutons-rouge" id="btn-supprimer-regroupement">Supprimer cet univers</button>
       </div>
     </div>
   </div>
@@ -621,29 +613,29 @@
   <div id="form-regroupements" class="cache">
     
       <div class="bandeau">
-        <div class="fiche-bandeau" id="form-regroupements-bandeau">
-          <span class="form-panel-titre" id="form-regroupements-titre">Nouvel univers</span>
+        <div class="fiches-bandeau" id="form-regroupements-bandeau">
+          <span class="fiches-titre" id="form-regroupements-titre">Nouvel univers</span>
         </div>
-        <button class="btn-fermer-panneau" onclick="fermerFormRegroupement()" title="Fermer">✕</button>
+        <button class="boutons-fermer" onclick="fermerFormRegroupement()" title="Fermer">✕</button>
       </div>
    
-    <div class="form-panel">
-      <div class="form-body">
+    <div class="fiches-central">
+      <div class="fiches-central-corps">
         <input type="hidden" id="freg-id">
-        <div class="form-grille">
-          <div class="form-groupe col-demi">
-            <label class="form-label">Nom</label>
-            <input type="text" class="form-ctrl" id="freg-nom">
+        <div class="fiches-grille">
+          <div class="fiches-champ col-demi">
+            <label class="fiches-label">Nom</label>
+            <input type="text" class="fiches-ctrl" id="freg-nom">
           </div>
-          <div class="form-groupe col-petit">
-            <label class="form-label">Position</label>
-            <select class="form-ctrl" id="freg-position">
+          <div class="fiches-champ champ-petit">
+            <label class="fiches-label">Position</label>
+            <select class="fiches-ctrl" id="freg-position">
               <option value="0">En premier</option>
             </select>
           </div>
-          <div class="form-groupe col-plein">
-            <label class="form-label">Mode</label>
-            <select class="form-ctrl" id="freg-mode" onchange="onChangeModeRegroupement()">
+          <div class="fiches-champ fiches-champ-plein">
+            <label class="fiches-label">Mode</label>
+            <select class="fiches-ctrl" id="freg-mode" onchange="onChangeModeRegroupement()">
               <option value="auto">Automatique (par ingrédient vedette)</option>
               <option value="manuel">Manuel (choix dans la fiche produit)</option>
             </select>
@@ -654,70 +646,70 @@
 		  
 		  
          <div id="freg-bloc-auto" style="display:contents">
-          <div class="form-groupe">
-            <label class="form-label">Catégorie UC</label>
-            <select class="form-ctrl" id="freg-cat" onchange="onCatRegroupementChange()">
+          <div class="fiches-champ">
+            <label class="fiches-label">Catégorie UC</label>
+            <select class="fiches-ctrl" id="freg-cat" onchange="onCatRegroupementChange()">
               <option value="">— Choisir —</option>
             </select>
           </div>
-		  <div class="form-groupe">
-            <label class="form-label">Ingrédient</label>
-            <select class="form-ctrl" id="freg-ing" disabled>
+		  <div class="fiches-champ">
+            <label class="fiches-label">Ingrédient</label>
+            <select class="fiches-ctrl" id="freg-ing" disabled>
               <option value="">— Choisir catégorie d'abord —</option>
             </select>
           </div>
-          <div class="form-groupe col-plein">
-            <label class="form-label">Et/ou catégories à exclure</label>
-            <div id="freg-categories-exclues" class="checkboxes-groupe"></div>
+          <div class="fiches-champ fiches-champ-plein">
+            <label class="fiches-label">Et/ou catégories à exclure</label>
+            <div id="freg-categories-exclues" class="casesacocher"></div>
           </div>
-          <div class="form-groupe col-plein">
-            <label class="form-label">Collections à exclure</label>
-            <div id="freg-collections-exclues" class="checkboxes-groupe"></div>
+          <div class="fiches-champ fiches-champ-plein">
+            <label class="fiches-label">Collections à exclure</label>
+            <div id="freg-collections-exclues" class="casesacocher"></div>
           </div>
-          <div class="form-groupe col-plein">
-            <label class="form-label">Gammes à exclure</label>
-            <div id="freg-gammes-exclues" class="checkboxes-groupe"></div>
+          <div class="fiches-champ fiches-champ-plein">
+            <label class="fiches-label">Gammes à exclure</label>
+            <div id="freg-gammes-exclues" class="casesacocher"></div>
           </div>
-          </div>
-		  
-		  
-		  
-		  
-		  
-          <div class="form-groupe col-plein">
-            <label class="form-label">Slogan</label>
-            <input type="text" class="form-ctrl" id="freg-slogan">
-          </div>
-          <div class="form-groupe col-plein">
-            <label class="form-label">Description</label>
-            <textarea class="form-ctrl textarea-auto" id="freg-desc" rows="3" oninput="ajusterHauteurTextarea(this)"></textarea>
           </div>
 		  
 		  
-         <div class="form-groupe col-plein">
-            <label class="form-label">Photo principale</label>
+		  
+		  
+		  
+          <div class="fiches-champ fiches-champ-plein">
+            <label class="fiches-label">Slogan</label>
+            <input type="text" class="fiches-ctrl" id="freg-slogan">
+          </div>
+          <div class="fiches-champ fiches-champ-plein">
+            <label class="fiches-label">Description</label>
+            <textarea class="fiches-ctrl zonedetexte" id="freg-desc" rows="3" oninput="ajusterHauteurTextarea(this)"></textarea>
+          </div>
+		  
+		  
+         <div class="fiches-champ fiches-champ-plein">
+            <label class="fiches-label">Photo principale</label>
             <input type="hidden" id="freg-photo-url">
             <div id="freg-photo-preview"></div>
-            <button type="button" class="bouton bouton-vert-pale bouton-petit" onclick="ouvrirMediatheque('freg-photo-url', 'freg-photo-preview', 'Regroupement')">Médiathèque</button>
+            <button type="button" class="boutons boutons-gris boutons-petit" onclick="ouvrirMediatheque('freg-photo-url', 'freg-photo-preview', 'Regroupement')">Médiathèque</button>
           </div>
 		  
 		  
-          <div class="form-groupe col-plein">
-            <label class="form-label">Photo principale — saisonnière</label>
+          <div class="fiches-champ fiches-champ-plein">
+            <label class="fiches-label">Photo principale — saisonnière</label>
             <input type="hidden" id="freg-photo-noel-url">
             <div id="freg-photo-noel-preview"></div>
-            <button type="button" class="bouton bouton-vert-pale bouton-petit" onclick="ouvrirMediatheque('freg-photo-noel-url', 'freg-photo-noel-preview', 'Regroupement Noël')">Médiathèque</button>
+            <button type="button" class="boutons boutons-gris boutons-petit" onclick="ouvrirMediatheque('freg-photo-noel-url', 'freg-photo-noel-preview', 'Regroupement Noël')">Médiathèque</button>
           </div>
 		  
 		  
         </div>
       </div>
     </div>
-    <div class="form-panel bandeau">
-      <div class="form-actions">
+    <div class="bandeau">
+      <div class="fiches-actions">
      
-        <button class="bouton bouton-contour" onclick="fermerFormRegroupement()">Annuler</button>
-		   <button class="bouton" onclick="sauvegarderRegroupement()">Enregistrer</button>
+        <button class="boutons boutons-contour" onclick="fermerFormRegroupement()">Annuler</button>
+		   <button class="boutons boutons-vert" onclick="sauvegarderRegroupement()">Enregistrer</button>
       </div>
     </div>
   </div>
@@ -767,11 +759,11 @@
               <div id="fiche-gamme-extras"></div>
               <p class="fiches-desc" id="fiche-gamme-desc"></p>
               <div class="fiches-section-label">Collection</div>
-              <div class="form-valeur" id="fiche-gamme-collection"></div>
+              <div class="fiches-valeur" id="fiche-gamme-collection"></div>
               <div class="fiches-section-label">Ingrédients de base</div>
               <div id="fiche-gamme-ingredients"></div>
               <div class="fiches-section-label">Produits</div>
-              <p class="texte-secondaire" id="fiche-gamme-produits"></p>
+              <p class="textes-discrets" id="fiche-gamme-produits"></p>
             </div>
           </div>
           <div class="bandeau">
@@ -814,7 +806,7 @@
                 </div>
               </div>
               <div class="fiches-grille">
-                <div class="fiches-champ col-demi">
+                <div class="fiches-champ champ-demi">
                   <label class="fiches-label">gamme</label>
                   <input type="text" class="fiches-ctrl" id="fg-nom">
                 </div>
@@ -832,13 +824,13 @@
                 </div>
                 <div class="fiches-champ fiches-champ-plein">
                   <label class="fiches-label">Description</label>
-                  <textarea class="fiches-ctrl textarea-auto" id="fg-desc" rows="3" oninput="ajusterHauteurTextarea(this)"></textarea>
+                  <textarea class="fiches-ctrl zonedetexte" id="fg-desc" rows="3" oninput="ajusterHauteurTextarea(this)"></textarea>
                 </div>
                 <input type="hidden" id="fg-photo-url">
                 <input type="hidden" id="fg-photo-noel-url">
                 <div class="fiches-champ fiches-champ-plein">
                   <label class="fiches-label">Ingrédients de base</label>
-				   <button type="button" class="boutons boutons-gris btn-ajouter-ingredient" onclick="ajouterGammeIng()">+ Ajouter un ingrédient</button>
+				   <button type="button" class="boutons boutons-gris bouton-ajout" onclick="ajouterGammeIng()">+ Ajouter un ingrédient</button>
                   <div id="liste-ingredients-base"></div>
                  
                 </div>
