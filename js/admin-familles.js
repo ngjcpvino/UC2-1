@@ -52,7 +52,7 @@ function ouvrirFicheFamille(fam_id) {
   let wrapHtml = '';
   if (fam.photo_url)      wrapHtml += `<img src="${fam.photo_url}" class="fiches-visuel-photo">`;
   if (fam.photo_noel_url) wrapHtml += `<img src="${fam.photo_noel_url}" class="fiches-visuel-photo">`;
-  if (fam.couleur_hex)    wrapHtml += `<div class="fiches-visuel-hex" style="background:${fam.couleur_hex}"></div>`;
+  if (fam.couleur_hex)    wrapHtml += `<div class="fiches-visuel-hex" style="background:${fam.couleur_hex}"><span class="fiches-visuel-rang">${fam.rang || ''}</span></div>`;
   const ficheExtras = document.getElementById('fiche-famille-extras');
   if (ficheExtras) ficheExtras.innerHTML = wrapHtml ? `<div class="fiches-visuel">${wrapHtml}</div>` : '';
 
@@ -86,9 +86,10 @@ function peuplerPositionFamille(col_id, rangActuel) {
     }
   }
   const selPos = document.getElementById('ff-position');
-  if (!selPos) return;
+  if (!selPos) { majApercuRangFamille(); return; }
   selPos.innerHTML = '<option value="0">En premier</option>';
-  if (!col_id) return;
+  selPos.onchange = majApercuRangFamille;
+  if (!col_id) { majApercuRangFamille(); return; }
   const gam_id = document.getElementById('ff-gamme')?.value || '';
   donneesFamilles.filter(f => f.col_id === col_id && (!gam_id || f.gam_id === gam_id))
     .sort((a, b) => (a.rang || 99) - (b.rang || 99))
@@ -99,6 +100,18 @@ function peuplerPositionFamille(col_id, rangActuel) {
       if (rangActuel && f.rang === rangActuel - 1) o.selected = true;
       selPos.appendChild(o);
     });
+  majApercuRangFamille();
+}
+
+function majApercuRangFamille() {
+  const apercu = document.getElementById('ff-rang-apercu');
+  const selPos = document.getElementById('ff-position');
+  if (!apercu || !selPos) return;
+  const position = parseInt(selPos.value) || 0;
+  const col = donneesCollections.find(c => c.col_id === document.getElementById('ff-collection').value);
+  const couleurs = couleurCollection(col ? col.nom : '', col ? col.couleur_hex : '');
+  apercu.style.background = `linear-gradient(145deg, ${couleurs[0]}, ${couleurs[1]})`;
+  apercu.innerHTML = `<span class="fiches-visuel-rang">${position + 1}</span>`;
 }
 function ouvrirFormFamille() {
   fermerFicheFamille();
@@ -107,7 +120,12 @@ function ouvrirFormFamille() {
   document.getElementById('ff-rang').value        = '';
   document.getElementById('ff-nom').value         = '';
   document.getElementById('ff-desc').value        = '';
-  (document.getElementById('ff-couleur-hex') || {}).value = '';
+  document.getElementById('ff-photo-url').value   = '';
+  document.getElementById('ff-photo-noel-url').value = '';
+  const previewFN1 = document.getElementById('ff-photo-preview');
+  if (previewFN1) previewFN1.innerHTML = '';
+  const previewFN2 = document.getElementById('ff-photo-noel-preview');
+  if (previewFN2) previewFN2.innerHTML = '';
   const sel = document.getElementById('ff-collection');
   sel.innerHTML = '<option value="">— Choisir —</option>';
   donneesCollections.sort((a, b) => (a.rang || 99) - (b.rang || 99)).forEach(col => {
@@ -136,7 +154,12 @@ function modifierFamille(fam_id) {
   document.getElementById('ff-id').value          = fam.fam_id;
   document.getElementById('ff-rang').value        = fam.rang || '';
     document.getElementById('ff-desc').value        = fam.description || '';
-  if (document.getElementById('ff-couleur-hex')) (document.getElementById('ff-couleur-hex') || {}).value = fam.couleur_hex || '';
+  document.getElementById('ff-photo-url').value   = fam.photo_url || '';
+  document.getElementById('ff-photo-noel-url').value = fam.photo_noel_url || '';
+  const previewF = document.getElementById('ff-photo-preview');
+  if (previewF) previewF.innerHTML = fam.photo_url ? `<img src="${fam.photo_url}">` : '';
+  const previewFN = document.getElementById('ff-photo-noel-preview');
+  if (previewFN) previewFN.innerHTML = fam.photo_noel_url ? `<img src="${fam.photo_noel_url}">` : '';
   const sel = document.getElementById('ff-collection');
   sel.innerHTML = '<option value="">— Choisir —</option>';
   donneesCollections.sort((a, b) => (a.rang || 99) - (b.rang || 99)).forEach(col => {
@@ -168,6 +191,8 @@ async function sauvegarderFamille() {
     nom,
     description: document.getElementById('ff-desc').value,
     couleur_hex: '',
+    photo_url:      document.getElementById('ff-photo-url').value,
+    photo_noel_url: document.getElementById('ff-photo-noel-url').value,
   };
   const res = await appelAPIPost('saveFamille', d);
   if (res && res.success) {

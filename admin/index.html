@@ -499,12 +499,30 @@
               <button class="boutons-fermer" onclick="fermerFormFamille()" title="Fermer">✕</button>
             </div>
           
-          <div class="fiches-central">
+         <div class="fiches-central">
             <div class="fiches-central-corps">
               <input type="hidden" id="ff-id">
               <input type="hidden" id="ff-rang">
-              <div class="fiches-grille">
+              <input type="hidden" id="ff-photo-url">
+              <input type="hidden" id="ff-photo-noel-url">
+              <div class="fiches-visuel">
                 <div class="fiches-champ">
+                  <div id="ff-photo-preview" class="fiches-visuel-photo"></div>
+                  <button type="button" class="boutons boutons-vert" onclick="ouvrirMediatheque('ff-photo-url', 'ff-photo-preview', 'Famille')">Médiathèque</button>
+                </div>
+                <div class="fiches-champ">
+                  <div id="ff-photo-noel-preview" class="fiches-visuel-photo"></div>
+                  <button type="button" class="boutons boutons-vert" onclick="ouvrirMediatheque('ff-photo-noel-url', 'ff-photo-noel-preview', 'Famille Noël')">Médiathèque</button>
+                </div>
+                <div class="fiches-champ">
+                  <div id="ff-rang-apercu" class="fiches-visuel-hex"></div>
+                  <select class="fiches-ctrl" id="ff-position">
+                    <option value="0">En premier</option>
+                  </select>
+                </div>
+              </div>
+              <div class="fiches-grille">
+                <div class="fiches-champ champ-demi">
                   <label class="fiches-label">Nom</label>
                   <input type="text" class="fiches-ctrl" id="ff-nom">
                 </div>
@@ -520,17 +538,10 @@
                     <option value="">— Aucune —</option>
                   </select>
                 </div>
-                <div class="fiches-champ champ-demi">
-            <label class="fiches-label">Nom</label>
-                  <select class="fiches-ctrl" id="ff-position">
-                    <option value="0">En premier</option>
-                  </select>
-                </div>
                 <div class="fiches-champ fiches-champ-plein">
                   <label class="fiches-label">Description</label>
                   <textarea class="fiches-ctrl zonedetexte" id="ff-desc" rows="3" oninput="ajusterHauteurTextarea(this)"></textarea>
                 </div>
-               
               </div>
             </div>
           </div>
