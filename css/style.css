@@ -2283,7 +2283,21 @@ textarea.zonedetexte {
 
 
 
-
+/* ═══════════════════════════════════════
+   BANDEAU FILTRE — bande pleine largeur
+   ═══════════════════════════════════════ */
+.baudeaufiltre {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  align-items: center;
+  background: var(--blanc);
+  border-bottom: 1px solid var(--accent);
+  padding: 16px 56px;
+  margin-left: -56px;
+  margin-right: -56px;
+  margin-bottom: 24px;
+}
 
 
 /* ═══════════════════════════════════════
@@ -2553,4 +2567,9 @@ textarea.fiches-ctrl {
 @media (max-width: 900px) {
   .fiches-grille { grid-template-columns: 1fr; }
   .fiches-champ-plein { grid-column: 1; }
+  .baudeaufiltre {
+    padding: 16px var(--padding-mobile);
+    margin-left: calc(-1 * var(--padding-mobile));
+    margin-right: calc(-1 * var(--padding-mobile));
+  }
 }

@@ -178,7 +178,7 @@ async function modifierCollection(col_id) {
   if (rangApercu) {
     const couleurs = couleurCollection(col.nom, col.couleur_hex);
     rangApercu.style.background = `linear-gradient(145deg,${couleurs[0]},${couleurs[1]})`;
-    rangApercu.innerHTML = `<span class="fiche-visuel-rang">${col.rang || ''}</span>`;
+    rangApercu.innerHTML = `<span class="fiches-visuel-rang">${col.rang || ''}</span>`;
   }
    document.getElementById('contenu-collections').classList.add('cache');
   document.getElementById('btn-nouvelle-collection').classList.add('cache');

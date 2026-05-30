@@ -18,10 +18,10 @@ function afficherGammes() {
   if (loading) loading.classList.add('cache');
   if (btnNew)  btnNew.classList.remove('cache');
 
-  let html = `<div class="filtres-bar" style="margin-bottom:1.2rem;">
-    <button class="filtre-btn ${!filtreGammesColId ? 'actif' : ''}" onclick="filtreGammesColId='';afficherGammes();">Tout</button>`;
+  let html = `<div class="baudeaufiltre">
+    <button class="boutons ${!filtreGammesColId ? 'boutons-vert' : 'boutons-contour'}" onclick="filtreGammesColId='';afficherGammes();">Tout</button>`;
   donneesCollections.sort((a, b) => (a.rang || 99) - (b.rang || 99)).forEach(col => {
-    html += `<button class="filtre-btn ${filtreGammesColId === col.col_id ? 'actif' : ''}" onclick="filtreGammesColId='${col.col_id}';afficherGammes();">${col.nom}</button>`;
+    html += `<button class="boutons ${filtreGammesColId === col.col_id ? 'boutons-vert' : 'boutons-contour'}" onclick="filtreGammesColId='${col.col_id}';afficherGammes();">${col.nom}</button>`;
   });
   html += `</div>`;
 
