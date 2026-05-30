@@ -2314,7 +2314,7 @@ textarea.zonedetexte {
   text-transform: uppercase;
   font-weight: 500;
   cursor: pointer;
-  border: none;
+  border: 0.5px solid transparent;
   padding: 10px 28px;
   transition: background 0.2s;
   text-decoration: none;
@@ -2326,7 +2326,7 @@ textarea.zonedetexte {
 .boutons-contour {
   background: transparent;
   color: var(--gris);
-  border: 1px solid var(--gris);
+  border: 0.5px solid var(--gris);
 }
 .boutons-rouge {
   background: var(--danger);
@@ -2353,7 +2353,7 @@ textarea.zonedetexte {
   padding: 10px 16px;
   font-size: 0.68rem;
 }
-.bouton-ajout {
+.boutons-ajout {
   margin-top: 8px;
 }
 
