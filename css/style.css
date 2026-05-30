@@ -2453,12 +2453,14 @@ textarea.fiches-ctrl {
 }
 
 /* ═══════════════════════════════════════
-   FICHES — générique consultation + modification
+   GÉNÉRIQUE - FICHES
+   consultation + modification
    collections, gammes, familles, univers
    ═══════════════════════════════════════ */
 
 .fiches-visuel {
   display: flex;
+  flex-wrap: wrap;
   gap: 16px;
   margin-bottom: 24px;
   align-items: flex-start;
@@ -2490,4 +2492,12 @@ textarea.fiches-ctrl {
   color: var(--blanc);
   font-weight: 300;
   transform: translateY(-8px);
+}
+
+/* ═══════════════════════════════════════
+   GÉNÉRIQUE — responsive
+   ═══════════════════════════════════════ */
+@media (max-width: 900px) {
+  .fiches-grille { grid-template-columns: 1fr; }
+  .fiches-champ-plein { grid-column: 1; }
 }
