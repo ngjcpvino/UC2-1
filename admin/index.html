@@ -633,16 +633,28 @@
     <div class="fiches-central">
       <div class="fiches-central-corps">
         <input type="hidden" id="freg-id">
+        <div class="fiches-visuel">
+          <div class="fiches-champ">
+            <div id="freg-photo-preview" class="fiches-visuel-photo"></div>
+            <button type="button" class="boutons boutons-vert" onclick="ouvrirMediatheque('freg-photo-url', 'freg-photo-preview', 'Regroupement')">Médiathèque</button>
+            <input type="hidden" id="freg-photo-url">
+          </div>
+          <div class="fiches-champ">
+            <div id="freg-photo-noel-preview" class="fiches-visuel-photo"></div>
+            <button type="button" class="boutons boutons-vert" onclick="ouvrirMediatheque('freg-photo-noel-url', 'freg-photo-noel-preview', 'Regroupement Noël')">Médiathèque</button>
+            <input type="hidden" id="freg-photo-noel-url">
+          </div>
+          <div class="fiches-champ">
+            <div id="freg-rang-apercu" class="fiches-visuel-hex"></div>
+            <select class="fiches-ctrl" id="freg-position">
+              <option value="0">En premier</option>
+            </select>
+          </div>
+        </div>
         <div class="fiches-grille">
           <div class="fiches-champ col-demi">
             <label class="fiches-label">Nom</label>
             <input type="text" class="fiches-ctrl" id="freg-nom">
-          </div>
-          <div class="fiches-champ champ-petit">
-            <label class="fiches-label">Position</label>
-            <select class="fiches-ctrl" id="freg-position">
-              <option value="0">En premier</option>
-            </select>
           </div>
           <div class="fiches-champ fiches-champ-plein">
             <label class="fiches-label">Mode</label>
@@ -695,24 +707,6 @@
             <label class="fiches-label">Description</label>
             <textarea class="fiches-ctrl zonedetexte" id="freg-desc" rows="3" oninput="ajusterHauteurTextarea(this)"></textarea>
           </div>
-		  
-		  
-         <div class="fiches-champ fiches-champ-plein">
-            <label class="fiches-label">Photo principale</label>
-            <input type="hidden" id="freg-photo-url">
-            <div id="freg-photo-preview"></div>
-            <button type="button" class="boutons boutons-gris boutons-petit" onclick="ouvrirMediatheque('freg-photo-url', 'freg-photo-preview', 'Regroupement')">Médiathèque</button>
-          </div>
-		  
-		  
-          <div class="fiches-champ fiches-champ-plein">
-            <label class="fiches-label">Photo principale — saisonnière</label>
-            <input type="hidden" id="freg-photo-noel-url">
-            <div id="freg-photo-noel-preview"></div>
-            <button type="button" class="boutons boutons-gris boutons-petit" onclick="ouvrirMediatheque('freg-photo-noel-url', 'freg-photo-noel-preview', 'Regroupement Noël')">Médiathèque</button>
-          </div>
-		  
-		  
         </div>
       </div>
     </div>

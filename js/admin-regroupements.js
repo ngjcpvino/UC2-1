@@ -76,6 +76,9 @@ function ouvrirFicheRegroupement(fra_id) {
   let wrapHtml = '';
   if (fra.photo_url)      wrapHtml += `<img src="${fra.photo_url}" class="fiches-visuel-photo">`;
   if (fra.photo_noel_url) wrapHtml += `<img src="${fra.photo_noel_url}" class="fiches-visuel-photo">`;
+  const couleursFra = couleurCollection(fra.nom, fra.couleur_hex);
+  wrapHtml += `<div class="fiches-visuel-hex" style="background:linear-gradient(145deg,${couleursFra[0]},${couleursFra[1]})"><span class="fiches-visuel-rang">${fra.rang || ''}</span></div>`;
+
   const ficheExtras = document.getElementById('fiche-regroupement-extras');
   if (ficheExtras) ficheExtras.innerHTML = wrapHtml ? `<div class="fiches-visuel">${wrapHtml}</div>` : '';
   document.getElementById('fiche-regroupement-modifier').onclick = () => { console.log('modifier cliqué', fra_id); fermerFicheRegroupement(); modifierRegroupement(fra_id); };
@@ -227,6 +230,18 @@ function peuplerPositionRegroupement(rangActuel) {
     if (rangActuel && fra.rang === rangActuel - 1) o.selected = true;
     sel.appendChild(o);
   });
+  sel.onchange = majApercuRangRegroupement;
+  majApercuRangRegroupement();
+}
+
+function majApercuRangRegroupement() {
+  const apercu = document.getElementById('freg-rang-apercu');
+  if (!apercu) return;
+  const position = parseInt(document.getElementById('freg-position')?.value) || 0;
+  const nom = document.getElementById('freg-nom')?.value || '';
+  const couleurs = couleurCollection(nom, '');
+  apercu.style.background = `linear-gradient(145deg,${couleurs[0]},${couleurs[1]})`;
+  apercu.innerHTML = `<span class="fiches-visuel-rang">${position + 1}</span>`;
 }
 
 function modifierRegroupement(fra_id) {
