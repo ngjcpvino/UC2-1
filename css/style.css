@@ -2326,7 +2326,7 @@ textarea.zonedetexte {
 .boutons-contour {
   background: transparent;
   color: var(--gris);
-  border: 0.5px solid var(--gris);
+  border: 0.5px solid var(--accent);
 }
 .boutons-rouge {
   background: var(--danger);
