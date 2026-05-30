@@ -200,10 +200,10 @@ function demandeCreerModalListe() {
     '<div class="demande-modal">' +
       '<button class="demande-modal-fermer" type="button" aria-label="Fermer">✕</button>' +
       '<div id="demande-vue-liste">' +
-        '<h2 class="demande-modal-titre">Produits qui vous intéressent</h2>' +
+        '<h2 class="demande-modal-titre">Vos Coups de cœur</h2>' +
         '<div class="demande-modal-liste" id="demande-modal-liste"></div>' +
         '<div class="demande-modal-pied">' +
-          '<span class="demande-modal-total-label">Total estimé</span>' +
+          '<span class="demande-modal-total-label">Total estimé avant frais de livraison</span>' +
           '<span class="demande-modal-total" id="demande-modal-total"></span>' +
         '</div>' +
         '<button type="button" class="bouton bouton-grand demande-continuer" data-action="continuer">Continuer</button>' +
@@ -211,7 +211,7 @@ function demandeCreerModalListe() {
       '<div id="demande-vue-form" class="cache">' +
         '<button type="button" class="demande-retour" data-action="retour">← Retour à la liste</button>' +
         '<h2 class="demande-modal-titre">Coordonnées</h2>' +
-        '<p class="demande-form-intro">Laissez vos coordonnées et nous reviendrons vers vous pour confirmer les délais, les coûts et la disponibilité avant tout engagement.</p>' +
+        '<p class="demande-form-intro">Laissez vos coordonnées, nous vous reviendrons pour confirmer les délais, les coûts et la disponibilité avant tout engagement.</p>' +
         '<div class="form-group"><label class="form-label">Nom <span>*</span></label><input type="text" class="form-control" id="demande-nom"></div>' +
         '<div class="form-group"><label class="form-label">Courriel <span>*</span></label><input type="email" class="form-control" id="demande-courriel"></div>' +
         '<div class="form-group"><label class="form-label">Cellulaire <span>*</span></label><input type="tel" class="form-control" id="demande-telephone"></div>' +
@@ -222,7 +222,7 @@ function demandeCreerModalListe() {
       '</div>' +
       '<div id="demande-vue-merci" class="cache">' +
         '<h2 class="demande-modal-titre">Demande envoyée !</h2>' +
-        '<p class="demande-form-intro">Merci ! Nous avons bien reçu votre liste et nous reviendrons vers vous très bientôt pour confirmer les délais, les coûts et la disponibilité.</p>' +
+        '<p class="demande-form-intro">Merci ! Nous avons bien reçu vos Coups de coeur. Nous vous reviendrons très bientôt pour confirmer la disponibilité des produits et les frais de livraison.</p>' +
         '<p class="demande-form-intro">Surveillez votre boîte de réception et pensez à vérifier vos pourriels, au cas où.</p>' +
         '<button type="button" class="bouton bouton-grand demande-continuer" data-action="fermer">Fermer</button>' +
       '</div>' +
