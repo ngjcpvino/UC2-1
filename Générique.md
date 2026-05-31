@@ -43,7 +43,7 @@ Les boutons = une famille `.boutons` avec variantes de couleur.
 - `.fiches-item`, `.fiches-item-nom`, `.fiches-item-desc`
 
 ### Formulaire (modification)
-- `.fiches-grille`
+- `.grille`
 - `.fiches-champ` (remplace `form-groupe`)
 - `.fiches-champ-plein` (remplace `col-plein`)
 - `.fiches-label` (remplace `form-label`)
@@ -140,8 +140,8 @@ mise a jour du 30 mai 2026 à 10h00
 | `.fiche-desc`            | `.fiches-desc`          | fiche       |
 | `.section-label`         | `.fiches-section-label` | fiche       |
 | `.form-actions`          | `.fiches-actions`       | fiche       |
-| `.form-valeur`           | `.fiches-valeur`        | fiche       |
-| `.form-grille`           | `.fiches-grille`        | fiche       |
+| `.form-valeur`           | `.valeur`        | fiche       |
+| `.form-grille`           | `.grille`        | fiche       |
 | `.form-groupe`           | `.fiches-champ`         | fiche       |
 | `.col-plein`             | `.fiches-champ-plein`   | fiche       |
 | `.form-label`            | `.fiches-label`         | fiche       |
@@ -204,7 +204,7 @@ mise a jour 30 mai 2023 12h08
 
 Suivi — Migration CSS générique (Univers Caresse)
 Correspondances : ancien → générique
-Ancienne classeClasse génériqueType.fiche-bandeau.fiches-bandeaufiche.form-panel-titre (titre fiche).fiches-titrefiche.fiche-slogan.fiches-sloganfiche.btn-fermer-panneau (✕).boutons-fermerbouton.form-panel (bloc central).fiches-centralfiche.form-body.fiches-central-corpsfiche.fiche-desc.fiches-descfiche.section-label.fiches-section-labelfiche.form-actions.fiches-actionsfiche.form-valeur.fiches-valeurfiche.form-grille.fiches-grillefiche.form-groupe.fiches-champfiche.col-plein.fiches-champ-pleinfiche.form-label.fiches-labelfiche.form-ctrl.fiches-ctrlfiche.fiche-visuel.fiches-visuelfiche.fiche-visuel-photo.fiches-visuel-photofiche.fiche-visuel-hex.fiches-visuel-hexfiche.fiche-visuel-rang.fiches-visuel-rangfiche.bouton.boutonsbouton.bouton (vert).boutons-vertbouton.bouton-contour.boutons-contourbouton.bouton-rouge.boutons-rougebouton.bouton-or.boutons-accentbouton.bouton-vert-pale.boutons-grisbouton.bouton-petit.boutons-petitbouton.texte-secondaire.textes-discretsutilitaire.checkboxes-groupe.casesacocherutilitaire.col-demi.champ-demiutilitaire.col-petit.champ-petitutilitaire.textarea-auto.zonedetexteutilitaire.btn-ajouter-ingredient.bouton-ajoututilitaire.photo-preview(supprimée — la div parent gère)nettoyage
+Ancienne classeClasse génériqueType.fiche-bandeau.fiches-bandeaufiche.form-panel-titre (titre fiche).fiches-titrefiche.fiche-slogan.fiches-sloganfiche.btn-fermer-panneau (✕).boutons-fermerbouton.form-panel (bloc central).fiches-centralfiche.form-body.fiches-central-corpsfiche.fiche-desc.fiches-descfiche.section-label.fiches-section-labelfiche.form-actions.fiches-actionsfiche.form-valeur.valeurfiche.form-grille.grillefiche.form-groupe.fiches-champfiche.col-plein.fiches-champ-pleinfiche.form-label.fiches-labelfiche.form-ctrl.fiches-ctrlfiche.fiche-visuel.fiches-visuelfiche.fiche-visuel-photo.fiches-visuel-photofiche.fiche-visuel-hex.fiches-visuel-hexfiche.fiche-visuel-rang.fiches-visuel-rangfiche.bouton.boutonsbouton.bouton (vert).boutons-vertbouton.bouton-contour.boutons-contourbouton.bouton-rouge.boutons-rougebouton.bouton-or.boutons-accentbouton.bouton-vert-pale.boutons-grisbouton.bouton-petit.boutons-petitbouton.texte-secondaire.textes-discretsutilitaire.checkboxes-groupe.casesacocherutilitaire.col-demi.champ-demiutilitaire.col-petit.champ-petitutilitaire.textarea-auto.zonedetexteutilitaire.btn-ajouter-ingredient.bouton-ajoututilitaire.photo-preview(supprimée — la div parent gère)nettoyage
 État d'avancement par section
 SectionHTMLJSUtilitairesVisuel identiqueCollections✅✅✅✅ (référence)Gammes✅✅*✅✅Familles✅✅✅✅ (photos + aperçu rang ajoutés)Univers (regroupements)⏳⏳✅❌ EN COURSProduits❌❌❌❌Factures / achats❌❌❌❌Ventes❌❌❌❌Commandes❌❌❌❌Remboursements❌❌❌❌Fabrication❌❌❌❌Contenu site❌❌❌❌Rédaction❌❌❌❌Densités❌❌❌❌Promotions❌❌❌❌INCI / Médiathèque / Catalogue❌❌❌❌
 * Gammes JS : tout migré sauf les rangées d'ingrédients (ingredient-rangee, ing-type, ing-nom, ing-inci, ing-qte) — classes partagées avec Produits, pas encore migrées.
@@ -218,7 +218,7 @@ HTML #form-regroupements — déplacer le bloc visuel en haut :
 Créer un .fiches-visuel en tête du corps avec : 2 photos (freg-photo-preview, freg-photo-noel-preview) + boutons Médiathèque, un carré freg-rang-apercu (.fiches-visuel-hex) et le select#freg-position en dessous.
 Retirer l'ancien champ Position d'en haut.
 Retirer les 2 anciens blocs photos situés en bas (après Description).
-⚠️ Le trouve a échoué la dernière fois (indentation réelle différente). Reprendre en demandant le bloc exact à l'utilisateur, du premier <div class="fiches-grille"> jusqu'à la ligne Mode.
+⚠️ Le trouve a échoué la dernière fois (indentation réelle différente). Reprendre en demandant le bloc exact à l'utilisateur, du premier <div class="grille"> jusqu'à la ligne Mode.
 
 
 JS admin-regroupements.js :
@@ -269,11 +269,11 @@ section la plus importante
 | .fiches-central-corps  | .central-corps       |
 | .fiches-desc           | .description         |
 | .fiches-section-label  | .section-label       |
-| .fiches-valeur         | .valeur              |
+| .valeur         | .valeur              |
 | .fiches-item           | .item                |
 | .fiches-item-nom       | .item-nom            |
 | .fiches-item-desc      | .item-description    |
-| .fiches-grille         | .grille              |
+| .grille         | .grille              |
 | .fiches-champ          | .champ               |
 | .fiches-champ-plein    | .champ-plein         |
 | .fiches-label          | .libelle (deja fait) |

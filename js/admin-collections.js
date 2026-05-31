@@ -58,10 +58,10 @@ function ouvrirFicheCollection(col_id) {
   const couleurs   = couleurCollection(col.nom, col.couleur_hex);
   const gammes     = donneesGammes.filter(g => g.col_id === col_id);
 const gammesHtml = gammes.map(gam => `
-    <div class="fiches-item" onclick="fermerFicheCollection(); afficherSection('gammes', null); ouvrirFicheGamme2('${gam.gam_id}')">
+    <div class=item" onclick="fermerFicheCollection(); afficherSection('gammes', null); ouvrirFicheGamme2('${gam.gam_id}')">
       <div>
-        <span class="fiches-item-nom">${(gam.nom || '').toUpperCase()}</span>
-        ${gam.description ? `<p class="fiches-item-desc">${gam.description}</p>` : ''}
+        <span class=item-nom">${(gam.nom || '').toUpperCase()}</span>
+        ${gam.description ? `<p class=item-desc">${gam.description}</p>` : ''}
       </div>
     </div>`).join('');
 
@@ -72,11 +72,11 @@ const gammesHtml = gammes.map(gam => `
   document.getElementById('fiche-collection-desc').textContent   = col.description || '';
 
   let wrapHtml = '';
-  if (col.photo_url)       wrapHtml += `<img src="${col.photo_url}" class="fiches-visuel-photo">`;
-  if (col.photo_noel_url)  wrapHtml += `<img src="${col.photo_noel_url}" class="fiches-visuel-photo">`;
- if (col.couleur_hex)     wrapHtml += `<div class="fiches-visuel-hex" style="background:${col.couleur_hex}"><span class="fiches-visuel-rang">${col.rang || ''}</span></div>`;
+  if (col.photo_url)       wrapHtml += `<img src="${col.photo_url}" class=visuel-photo">`;
+  if (col.photo_noel_url)  wrapHtml += `<img src="${col.photo_noel_url}" class=visuel-photo">`;
+ if (col.couleur_hex)     wrapHtml += `<div class=visuel-hex" style="background:${col.couleur_hex}"><span class=visuel-rang">${col.rang || ''}</span></div>`;
   const ficheExtras = document.getElementById('fiche-collection-extras');
-  if (ficheExtras) ficheExtras.innerHTML = wrapHtml ? `<div class="fiches-visuel">${wrapHtml}</div>` : '';
+  if (ficheExtras) ficheExtras.innerHTML = wrapHtml ? `<div class=visuel">${wrapHtml}</div>` : '';
 
   document.getElementById('fiche-collection-lignes').innerHTML = gammesHtml || '<p class="vide-desc">Aucune gamme</p>';
 
@@ -178,7 +178,7 @@ async function modifierCollection(col_id) {
   if (rangApercu) {
     const couleurs = couleurCollection(col.nom, col.couleur_hex);
     rangApercu.style.background = `linear-gradient(145deg,${couleurs[0]},${couleurs[1]})`;
-    rangApercu.innerHTML = `<span class="fiches-visuel-rang">${col.rang || ''}</span>`;
+    rangApercu.innerHTML = `<span class=visuel-rang">${col.rang || ''}</span>`;
   }
    document.getElementById('contenu-collections').classList.add('cache');
   document.getElementById('btn-nouvelle-collection').classList.add('cache');
