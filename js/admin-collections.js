@@ -58,7 +58,7 @@ function ouvrirFicheCollection(col_id) {
   const couleurs   = couleurCollection(col.nom, col.couleur_hex);
   const gammes     = donneesGammes.filter(g => g.col_id === col_id);
 const gammesHtml = gammes.map(gam => `
-    <div class=item" onclick="fermerFicheCollection(); afficherSection('gammes', null); ouvrirFicheGamme2('${gam.gam_id}')">
+    <div class="item" onclick="fermerFicheCollection(); afficherSection('gammes', null); ouvrirFicheGamme2('${gam.gam_id}')">
       <div>
         <span class="item-nom">${(gam.nom || '').toUpperCase()}</span>
         ${gam.description ? `<p class=item-desc">${gam.description}</p>` : ''}

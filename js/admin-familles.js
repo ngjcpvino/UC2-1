@@ -52,7 +52,7 @@ function ouvrirFicheFamille(fam_id) {
   let wrapHtml = '';
   if (fam.photo_url)      wrapHtml += `<img src="${fam.photo_url}" class=visuel-photo">`;
   if (fam.photo_noel_url) wrapHtml += `<img src="${fam.photo_noel_url}" class=visuel-photo">`;
-  if (fam.couleur_hex)    wrapHtml += `<div class=visuel-hex" style="background:${fam.couleur_hex}"><span class=visuel-rang">${fam.rang || ''}</span></div>`;
+  if (fam.couleur_hex)    wrapHtml += `<div class=visuel-hex" style="background:${fam.couleur_hex}"><span class="visuel-rang">${fam.rang || ''}</span></div>`;
   const ficheExtras = document.getElementById('fiche-famille-extras');
   if (ficheExtras) ficheExtras.innerHTML = wrapHtml ? `<div class=visuel">${wrapHtml}</div>` : '';
 
@@ -111,7 +111,7 @@ function majApercuRangFamille() {
   const col = donneesCollections.find(c => c.col_id === document.getElementById('ff-collection').value);
   const couleurs = couleurCollection(col ? col.nom : '', col ? col.couleur_hex : '');
   apercu.style.background = `linear-gradient(145deg, ${couleurs[0]}, ${couleurs[1]})`;
-  apercu.innerHTML = `<span class=visuel-rang">${position + 1}</span>`;
+  apercu.innerHTML = `<span class="visuel-rang">${position + 1}</span>`;
 }
 function ouvrirFormFamille() {
   fermerFicheFamille();
