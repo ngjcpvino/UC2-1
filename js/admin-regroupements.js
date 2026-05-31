@@ -73,14 +73,19 @@ function ouvrirFicheRegroupement(fra_id) {
   if (elProduits) elProduits.textContent = produitsDuRegroupement.length
     ? produitsDuRegroupement.map(p => p.nom).join(' — ')
     : 'Aucun produit';
-  let wrapHtml = '';
-  if (fra.photo_url)      wrapHtml += `<img src="${fra.photo_url}" class=visuel-photo">`;
-  if (fra.photo_noel_url) wrapHtml += `<img src="${fra.photo_noel_url}" class=visuel-photo">`;
+ let wrapHtml = '';
+  if (fra.photo_url)      wrapHtml += `<img src="${fra.photo_url}" class="visuel-photo">`;
+  if (fra.photo_noel_url) wrapHtml += `<img src="${fra.photo_noel_url}" class="visuel-photo">`;
   const couleursFra = couleurCollection(fra.nom, fra.couleur_hex);
-  wrapHtml += `<div class=visuel-hex" style="background:linear-gradient(145deg,${couleursFra[0]},${couleursFra[1]})"><span class=visuel-rang">${fra.rang || ''}</span></div>`;
+  wrapHtml += `<div class="visuel-hex" style="background:linear-gradient(145deg,${couleursFra[0]},${couleursFra[1]})"><span class="visuel-rang">${fra.rang || ''}</span></div>`;
 
   const ficheExtras = document.getElementById('fiche-regroupement-extras');
-  if (ficheExtras) ficheExtras.innerHTML = wrapHtml ? `<div class=visuel">${wrapHtml}</div>` : '';
+  if (ficheExtras) ficheExtras.innerHTML = wrapHtml ? `<div class="visuel">${wrapHtml}</div>` : '';
+  
+  
+  
+  
+  
   document.getElementById('fiche-regroupement-modifier').onclick = () => { console.log('modifier cliqué', fra_id); fermerFicheRegroupement(); modifierRegroupement(fra_id); };
   document.getElementById('btn-supprimer-regroupement').onclick  = () => supprimerRegroupement(fra_id);
   document.getElementById('contenu-regroupements').classList.add('cache');
@@ -241,7 +246,7 @@ function majApercuRangRegroupement() {
   const nom = document.getElementById('freg-nom')?.value || '';
   const couleurs = couleurCollection(nom, '');
   apercu.style.background = `linear-gradient(145deg,${couleurs[0]},${couleurs[1]})`;
-  apercu.innerHTML = `<span class=visuel-rang">${position + 1}</span>`;
+  apercu.innerHTML = `<span class="visuel-rang">${position + 1}</span>`;
 }
 
 function modifierRegroupement(fra_id) {

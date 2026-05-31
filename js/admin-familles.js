@@ -50,11 +50,11 @@ function ouvrirFicheFamille(fam_id) {
   document.getElementById('fiche-famille-desc').textContent       = fam.description || '—';
 
   let wrapHtml = '';
-  if (fam.photo_url)      wrapHtml += `<img src="${fam.photo_url}" class=visuel-photo">`;
-  if (fam.photo_noel_url) wrapHtml += `<img src="${fam.photo_noel_url}" class=visuel-photo">`;
-  if (fam.couleur_hex)    wrapHtml += `<div class=visuel-hex" style="background:${fam.couleur_hex}"><span class="visuel-rang">${fam.rang || ''}</span></div>`;
+  if (fam.photo_url)      wrapHtml += `<img src="${fam.photo_url}" class="visuel-photo">`;
+  if (fam.photo_noel_url) wrapHtml += `<img src="${fam.photo_noel_url}" class="visuel-photo">`;
+  if (fam.couleur_hex)    wrapHtml += `<div class="visuel-hex" style="background:${fam.couleur_hex}"><span class="visuel-rang">${fam.rang || ''}</span></div>`;
   const ficheExtras = document.getElementById('fiche-famille-extras');
-  if (ficheExtras) ficheExtras.innerHTML = wrapHtml ? `<div class=visuel">${wrapHtml}</div>` : '';
+  if (ficheExtras) ficheExtras.innerHTML = wrapHtml ? `<div class="visuel">${wrapHtml}</div>` : '';
 
   document.getElementById('fiche-famille-modifier').onclick = () => {
     fermerFicheFamille();

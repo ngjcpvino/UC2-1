@@ -60,11 +60,11 @@ function ouvrirFicheGamme2(gam_id) {
   document.getElementById('fiche-gamme-desc').textContent       = gam.description || '—';
 
   let wrapHtml = '';
-  if (gam.photo_url)      wrapHtml += `<img src="${gam.photo_url}" class=visuel-photo">`;
-  if (gam.photo_noel_url) wrapHtml += `<img src="${gam.photo_noel_url}" class=visuel-photo">`;
-  if (gam.couleur_hex)    wrapHtml += `<div class=visuel-hex" style="background:${gam.couleur_hex}"></div>`;
+  if (gam.photo_url)      wrapHtml += `<img src="${gam.photo_url}" class="visuel-photo">`;
+  if (gam.photo_noel_url) wrapHtml += `<img src="${gam.photo_noel_url}" class="visuel-photo">`;
+  if (gam.couleur_hex)    wrapHtml += `<div class="visuel-hex" style="background:${gam.couleur_hex}"></div>`;
   const ficheExtras = document.getElementById('fiche-gamme-extras');
-  if (ficheExtras) ficheExtras.innerHTML = wrapHtml ? `<div class=visuel">${wrapHtml}</div>` : '';
+  if (ficheExtras) ficheExtras.innerHTML = wrapHtml ? `<div class="visuel">${wrapHtml}</div>` : '';
 
   const produitsGamme = donneesProduits.filter(p => p.gam_id === gam_id);
   const elProduits = document.getElementById('fiche-gamme-produits');
@@ -205,7 +205,7 @@ function majApercuRangGamme() {
   const col = donneesCollections.find(c => c.col_id === document.getElementById('fg-collection').value);
   const couleurs = couleurCollection(col ? col.nom : '', col ? col.couleur_hex : '');
   apercu.style.background = `linear-gradient(145deg, ${couleurs[0]}, ${couleurs[1]})`;
-  apercu.innerHTML = `<span class=visuel-rang">${position + 1}</span>`;
+  apercu.innerHTML = `<span class="visuel-rang">${position + 1}</span>`;
 }
 
 function fermerFormGamme2() {
@@ -226,7 +226,7 @@ async function ouvrirFicheGamme(gam_id) {
     modifierGamme(gam_id);
   };
   document.getElementById('btn-supprimer-ligne-fiche').onclick = () => supprimerGamme(gam_id);
-  document.getElementById('fiche-ligne-ingredients').innerHTML  = '<span class=valeur">—</span>';
+  document.getElementById('fiche-ligne-ingredients').innerHTML  = '<span class="valeur">—</span>';
   document.getElementById('fiche-collection').classList.remove('visible');
   document.getElementById('fiche-ligne').classList.remove('cache');
   document.getElementById('contenu-collections').classList.add('cache');
