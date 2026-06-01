@@ -212,9 +212,10 @@ function demandeCreerModalListe() {
         '<button type="button" class="demande-retour" data-action="retour">← Retour à la liste</button>' +
         '<h2 class="demande-modal-titre">Coordonnées</h2>' +
         '<p class="demande-form-intro">Laissez vos coordonnées, nous vous reviendrons très bientôt pour confirmer la disponibilité des produits et les frais de livraison avant tout engagement.</p>' +
+        '<div class="form-group"><label class="form-label">Prénom <span>*</span></label><input type="text" class="form-control" id="demande-prenom"></div>' +
         '<div class="form-group"><label class="form-label">Nom <span>*</span></label><input type="text" class="form-control" id="demande-nom"></div>' +
         '<div class="form-group"><label class="form-label">Courriel <span>*</span></label><input type="email" class="form-control" id="demande-courriel"></div>' +
-        '<div class="form-group"><label class="form-label">Cellulaire <span>*</span></label><input type="tel" class="form-control" id="demande-telephone"></div>' +
+        '<div class="form-group"><label class="form-label">Cellulaire <span>*</span></label><input type="tel" class="form-control" id="demande-telephone" oninput="formaterTelephone(this)"></div>' +
         '<div class="form-group"><label class="form-label">Code postal <span>*</span></label><input type="text" class="form-control" id="demande-code-postal"></div>' +
         '<div class="form-group"><label class="form-label">Message</label><textarea class="form-control" id="demande-message"></textarea></div>' +
         '<div id="demande-form-erreur" class="demande-form-erreur cache"></div>' +
@@ -328,6 +329,7 @@ function demandeRetourListe() {
 }
 
 async function demandeEnvoyer() {
+  const prenom     = (document.getElementById('demande-prenom').value || '').trim();
   const nom        = (document.getElementById('demande-nom').value || '').trim();
   const courriel   = (document.getElementById('demande-courriel').value || '').trim();
   const telephone  = (document.getElementById('demande-telephone').value || '').trim();
@@ -336,7 +338,7 @@ async function demandeEnvoyer() {
   const erreurEl   = document.getElementById('demande-form-erreur');
   const btn        = document.querySelector('.demande-form-envoyer');
 
-  if (!nom || !courriel || !telephone || !codePostal) {
+  if (!prenom || !nom || !courriel || !telephone || !codePostal) {
     erreurEl.textContent = 'Veuillez remplir tous les champs obligatoires.';
     erreurEl.classList.remove('cache');
     return;
@@ -361,13 +363,13 @@ async function demandeEnvoyer() {
   try {
     const res = (typeof appelAPIPost === 'function')
       ? await appelAPIPost('envoyerDemandeCommande', {
-          client: nom, courriel, telephone, code_postal: codePostal, message, lignes
+          prenom, nom, courriel, telephone, code_postal: codePostal, message, lignes
         })
       : null;
     if (!res || !res.success) throw new Error('Echec envoi');
 
     demandeVider();
-    ['demande-nom', 'demande-courriel', 'demande-telephone', 'demande-code-postal', 'demande-message']
+    ['demande-prenom', 'demande-nom', 'demande-courriel', 'demande-telephone', 'demande-code-postal', 'demande-message']
       .forEach(id => { const el = document.getElementById(id); if (el) el.value = ''; });
     const vueForm  = document.getElementById('demande-vue-form');
     const vueMerci = document.getElementById('demande-vue-merci');

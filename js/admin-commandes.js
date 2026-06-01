@@ -69,6 +69,7 @@ function ouvrirFormCommande() {
   document.getElementById('form-commande-titre').textContent = 'Nouvelle commande ' + cmdNumeroAffiche;
 
   // Vider tous les champs du formulaire
+  document.getElementById('cmd-prenom').value      = '';
   document.getElementById('cmd-client').value      = '';
   document.getElementById('cmd-courriel').value    = '';
   document.getElementById('cmd-telephone').value   = '';
@@ -276,12 +277,14 @@ function cmdCalculerSolde() {
 // ENREGISTRER LA COMMANDE
 // ═══════════════════════════════════════
 async function enregistrerCommande() {
-  const client      = document.getElementById('cmd-client').value.trim();
+  const prenom      = document.getElementById('cmd-prenom').value.trim();
+  const nom         = document.getElementById('cmd-client').value.trim();
+  const client      = (prenom + ' ' + nom).trim();
   const courriel    = document.getElementById('cmd-courriel').value.trim();
   const telephone   = document.getElementById('cmd-telephone').value.trim();
   const code_postal = document.getElementById('cmd-code-postal').value.trim();
 
-  if (!client)      { afficherMsg('commandes', 'Le nom du client est obligatoire.', 'erreur'); return; }
+  if (!nom)         { afficherMsg('commandes', 'Le nom du client est obligatoire.', 'erreur'); return; }
   if (!courriel)    { afficherMsg('commandes', 'Le courriel est obligatoire.', 'erreur'); return; }
   if (!telephone)   { afficherMsg('commandes', 'Le téléphone est obligatoire.', 'erreur'); return; }
   if (!code_postal) { afficherMsg('commandes', 'Le code postal est obligatoire.', 'erreur'); return; }
@@ -312,6 +315,8 @@ async function enregistrerCommande() {
     const resUpdate = await appelAPIPost('updateCommandeComplete', {
       cmd_id,
       client,
+      prenom,
+      nom,
       courriel,
       telephone,
       code_postal,
@@ -331,6 +336,8 @@ async function enregistrerCommande() {
     const resCreate = await appelAPIPost('createCommande', {
       cmd_id,
       client,
+      prenom,
+      nom,
       courriel,
       telephone,
       code_postal,
@@ -640,7 +647,8 @@ async function modifierCommande(cmd_id) {
   document.getElementById('form-commande-titre').textContent = 'Modifier commande ' + cmdNumeroAffiche;
 
   // Remplir les champs
-  document.getElementById('cmd-client').value      = c.client || '';
+  document.getElementById('cmd-prenom').value      = c.prenom || '';
+  document.getElementById('cmd-client').value      = c.nom || '';
   document.getElementById('cmd-courriel').value    = c.courriel || '';
   document.getElementById('cmd-telephone').value   = c.telephone || '';
   document.getElementById('cmd-code-postal').value = c.code_postal || '';
@@ -813,7 +821,8 @@ function ouvrirFormCompleter(cmd_id) {
   recap += '<div style="margin-top:8px;font-weight:500">Total prévu : ' + formaterPrix(c.total_prevu) + '</div>';
   document.getElementById('form-completer-recap').innerHTML = recap;
 
-  document.getElementById('completer-client').value    = c.client || '';
+  document.getElementById('completer-prenom').value    = c.prenom || '';
+  document.getElementById('completer-client').value    = c.nom || '';
   document.getElementById('completer-courriel').value  = c.courriel || '';
   document.getElementById('completer-telephone').value = c.telephone || '';
   document.getElementById('completer-livraison').value = (c.livraison && c.livraison > 0) ? c.livraison : '';
@@ -856,7 +865,9 @@ async function genererLienSquare() {
   afficherChargement();
   const courriel = document.getElementById('completer-courriel').value.trim();
   const telephone = document.getElementById('completer-telephone').value.trim();
-  const res = await appelAPIPost('creerLienPaiement', { montant: montant, nom: 'Commande ' + c.cmd_id, courriel: courriel, telephone: telephone });
+  const prenom = document.getElementById('completer-prenom').value.trim();
+  const nomClient = document.getElementById('completer-client').value.trim();
+  const res = await appelAPIPost('creerLienPaiement', { montant: montant, nom: 'Commande ' + c.cmd_id, courriel: courriel, telephone: telephone, prenom: prenom, nom_client: nomClient });
   cacherChargement();
   if (res && res.success && res.url) {
     document.getElementById('completer-square').value = res.url;
@@ -871,7 +882,9 @@ async function envoyerProposition() {
   const c = toutesCommandes.find(x => x.cmd_id === cmdCompleterIdEnCours);
   if (!c) return;
 
-  const client    = document.getElementById('completer-client').value.trim();
+  const prenom    = document.getElementById('completer-prenom').value.trim();
+  const nom       = document.getElementById('completer-client').value.trim();
+  const client    = (prenom + ' ' + nom).trim();
   const courriel  = document.getElementById('completer-courriel').value.trim();
   const telephone = document.getElementById('completer-telephone').value.trim();
   const livraison = document.getElementById('completer-livraison').value;
@@ -905,6 +918,8 @@ async function envoyerProposition() {
   const resUpdate = await appelAPIPost('updateCommandeComplete', {
     cmd_id: cmdCompleterIdEnCours,
     client: client,
+    prenom: prenom,
+    nom: nom,
     courriel: courriel,
     telephone: telephone,
     code_postal: c.code_postal,
