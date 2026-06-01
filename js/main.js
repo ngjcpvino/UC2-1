@@ -539,10 +539,13 @@ function construireCatalogue() {
         return `
           <div class="ligne-groupe" data-gamme="${gam_id}">
             ${gamme ? `<div class="ligne-groupe-entete">
-              <div class="ligne-groupe-nom">${gamme.toUpperCase()}</div>
-              ${prods[0]?.desc_gamme ? `<p class="ligne-groupe-desc">${prods[0].desc_gamme}</p>` : ''}
+              ${photoGamme ? `<div class="bloc-gamme-photo"><img src="${photoGamme}" alt="${gamme}" onerror="this.parentElement.style.display='none'"></div>` : ''}
+              <div class="ligne-groupe-entete-texte">
+                <div class="ligne-groupe-nom">${gamme.toUpperCase()}</div>
+                ${prods[0]?.desc_gamme ? `<p class="ligne-groupe-desc">${prods[0].desc_gamme}</p>` : ''}
+              </div>
             </div>` : ''}
-            <div class="produits-grille">${photoGamme ? `<div class="bloc-gamme-photo"><img src="${photoGamme}" alt="${gamme}" onerror="this.parentElement.style.display='none'"></div>` : ''}${prods.map(p => carteProduit(p)).join('')}</div>
+            <div class="produits-grille">${prods.map(p => carteProduit(p)).join('')}</div>
           </div>`;
       }).join('');
       const descFamille = Object.values(parGamme)[0]?.[0]?.desc_famille || '';
