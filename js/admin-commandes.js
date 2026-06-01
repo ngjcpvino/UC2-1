@@ -854,7 +854,9 @@ async function genererLienSquare() {
   const montant = (c.total_prevu || 0) + livraison;
   if (montant <= 0) { afficherMsg('commandes', 'Montant invalide.', 'erreur'); return; }
   afficherChargement();
-  const res = await appelAPIPost('creerLienPaiement', { montant: montant, nom: 'Commande ' + c.cmd_id });
+  const courriel = document.getElementById('completer-courriel').value.trim();
+  const telephone = document.getElementById('completer-telephone').value.trim();
+  const res = await appelAPIPost('creerLienPaiement', { montant: montant, nom: 'Commande ' + c.cmd_id, courriel: courriel, telephone: telephone });
   cacherChargement();
   if (res && res.success && res.url) {
     document.getElementById('completer-square').value = res.url;
