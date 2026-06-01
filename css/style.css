@@ -2215,7 +2215,20 @@ tr:has(+ .ven-resume-row) td {
   opacity: 0.7;
   letter-spacing: 0.04em;
 }
-
+/* ─── Bloc photo de gamme (catalogue public) ─── */
+.bloc-gamme-photo {
+  width: 110px;
+  aspect-ratio: 1/1;
+  overflow: hidden;
+  margin-bottom: 20px;
+  background: var(--beige);
+}
+.bloc-gamme-photo img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
 /* ═══════════════════════════════════════
  toute cette section sera a effacée quand le ménage sera fait car les ostis de claude en ajoute et ajoute et ajoute.
    ═══════════════════════════════════════ */
