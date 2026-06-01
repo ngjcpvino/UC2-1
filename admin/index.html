@@ -2234,7 +2234,7 @@
     <div class="form-panel bandeau visible">
       <div class="form-actions">
         <button class="bouton bouton-contour" onclick="fermerFormCompleter()">Annuler</button>
-        <button class="bouton bouton-or" onclick="envoyerProposition()">Envoyer au client</button>
+        <button class="bouton bouton-or" onclick="apercuProposition()">Voir la proposition</button>
       </div>
     </div>
   </div>
@@ -3664,6 +3664,22 @@
     </div>
   </div>
 </div>
+<div class="modal-admin-overlay" id="modal-apercu-proposition">
+  <div class="modal-admin" style="max-width:600px">
+    <div class="modal-admin-header">
+      <div class="modal-admin-titre">Aperçu de la proposition</div>
+      <button class="btn-fermer-panneau" onclick="fermerApercuProposition()">✕</button>
+    </div>
+    <div class="modal-admin-body" id="modal-apercu-proposition-contenu"></div>
+    <div class="modal-admin-body">
+      <div class="form-actions">
+        <button class="bouton bouton-contour" onclick="fermerApercuProposition()">Modifier</button>
+        <button class="bouton bouton-or" onclick="envoyerProposition()">Envoyer au client</button>
+      </div>
+    </div>
+  </div>
+</div>
+
 <div class="modal-admin-overlay" id="modal-square-confirmation">
   <div class="modal-admin" style="max-width:400px">
     <div class="modal-admin-header">
