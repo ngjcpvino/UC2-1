@@ -2217,11 +2217,12 @@ tr:has(+ .ven-resume-row) td {
 }
 /* ─── Bloc photo de gamme (catalogue public) ─── */
 .bloc-gamme-photo {
+  align-self: center;
   width: 110px;
-  aspect-ratio: 1/1;
+  height: 110px;
   overflow: hidden;
-  margin-bottom: 20px;
   background: var(--beige);
+  justify-self: start;
 }
 .bloc-gamme-photo img {
   width: 100%;
