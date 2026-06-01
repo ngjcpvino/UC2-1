@@ -191,6 +191,14 @@ function demandeInjecterCasesModal(produit) {
 }
 
 // ─── MODAL DE LA LISTE (étape 5) ───
+function formaterTelephone(input) {
+  let d = input.value.replace(/\D/g, '').slice(0, 10);
+  let out = d;
+  if (d.length > 6) out = d.slice(0, 3) + ' ' + d.slice(3, 6) + '-' + d.slice(6);
+  else if (d.length > 3) out = d.slice(0, 3) + ' ' + d.slice(3);
+  input.value = out;
+}
+
 function demandeCreerModalListe() {
   if (document.getElementById('demande-modal')) return;
   const overlay = document.createElement('div');
