@@ -521,6 +521,7 @@ select.form-control, select.form-ctrl { cursor: pointer; }
 .demande-item-photo-vide { background: var(--beige); }
 .demande-item-infos { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 2px; }
 .demande-item-collection { font-family: 'DM Sans', sans-serif; font-size: var(--texte-70); letter-spacing: 0.12em; text-transform: uppercase; color: var(--accent); }
+.demande-item-gamme { font-family: 'DM Sans', sans-serif; font-size: var(--texte-75); color: var(--primary); font-weight: 300; font-style: italic; }
 .demande-item-nom { font-family: 'DM Sans', sans-serif; font-size: var(--texte-95); font-weight: 500; color: var(--gris-fonce); }
 .demande-item-format { font-family: 'DM Sans', sans-serif; font-size: var(--texte-82); color: var(--gris); }
 .demande-item-droite { display: flex; flex-direction: column; align-items: flex-end; gap: 8px; flex-shrink: 0; }

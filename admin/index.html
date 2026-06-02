@@ -1989,7 +1989,10 @@
       <div class="page-entete-eyebrow">Commandes en attente de livraison</div>
       <div class="page-entete-titre">Commandes</div>
     </div>
-    <button class="bouton" onclick="ouvrirFormCommande()">+ Nouvelle commande</button>
+    <div class="form-actions">
+      <button class="bouton" onclick="ouvrirFormCommande()">+ Nouvelle commande</button>
+      <button class="bouton bouton-contour" onclick="chargerCommandes()">↺ Actualiser</button>
+    </div>
   </div>
   <div class="msg-zone" id="msg-commandes"></div>
 

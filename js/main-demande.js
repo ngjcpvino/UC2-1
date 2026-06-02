@@ -36,7 +36,7 @@ function demandeCle(pro_id, format_poids, format_unite) {
 }
 
 // ─── AJOUTER UN ITEM ───
-function demandeAjouter(pro_id, format_poids, format_unite, nom_produit, prix_unitaire, image_url, nom_collection) {
+function demandeAjouter(pro_id, format_poids, format_unite, nom_produit, prix_unitaire, image_url, nom_collection, nom_gamme) {
   const cle = demandeCle(pro_id, format_poids, format_unite);
   const existant = demandeListe.find(i => demandeCle(i.pro_id, i.format_poids, i.format_unite) === cle);
   if (existant) {
@@ -50,6 +50,7 @@ function demandeAjouter(pro_id, format_poids, format_unite, nom_produit, prix_un
       prix_unitaire,
       image_url,
       nom_collection,
+      nom_gamme,
       quantite: 1
     });
   }
@@ -176,7 +177,7 @@ function demandeInjecterCasesModal(produit) {
       coeur.textContent = coche ? '♥' : '♡';
       coeur.classList.toggle('coche', coche);
       if (coche) {
-        demandeAjouter(produit.pro_id, poids, unite, produit.nom, prix, produit.image_url, produit.nom_collection);
+        demandeAjouter(produit.pro_id, poids, unite, produit.nom, prix, produit.image_url, produit.nom_collection, produit.nom_gamme);
       } else {
         demandeRetirer(produit.pro_id, poids, unite);
       }
@@ -211,7 +212,7 @@ function demandeCreerModalListe() {
         '<h2 class="demande-modal-titre">Vos Coups de cœur</h2>' +
         '<div class="demande-modal-liste" id="demande-modal-liste"></div>' +
         '<div class="demande-modal-pied">' +
-          '<span class="demande-modal-total-label">Total estimé avant les frais de livraison</span>' +
+          '<span class="demande-modal-total-label">Total avant les frais de livraison</span>' +
           '<span class="demande-modal-total" id="demande-modal-total"></span>' +
         '</div>' +
         '<button type="button" class="bouton bouton-grand demande-continuer" data-action="continuer">Continuer</button>' +
@@ -219,7 +220,7 @@ function demandeCreerModalListe() {
       '<div id="demande-vue-form" class="cache">' +
         '<button type="button" class="demande-retour" data-action="retour">← Retour à la liste</button>' +
         '<h2 class="demande-modal-titre">Coordonnées</h2>' +
-        '<p class="demande-form-intro">Laissez vos coordonnées, nous vous reviendrons très bientôt pour confirmer la disponibilité des produits et les frais de livraison avant tout engagement.</p>' +
+        '<p class="demande-form-intro">Inscrivez vos coordonnées, nous vous reviendrons très bientôt pour confirmer la disponibilité des produits et les frais de livraison avant tout engagement.</p>' +
         '<div class="form-group"><label class="form-label">Prénom <span>*</span></label><input type="text" class="form-control" id="demande-prenom"></div>' +
         '<div class="form-group"><label class="form-label">Nom <span>*</span></label><input type="text" class="form-control" id="demande-nom"></div>' +
         '<div class="form-group"><label class="form-label">Courriel <span>*</span></label><input type="email" class="form-control" id="demande-courriel"></div>' +
@@ -227,10 +228,10 @@ function demandeCreerModalListe() {
         '<div class="form-group"><label class="form-label">Code postal <span>*</span></label><input type="text" class="form-control" id="demande-code-postal"></div>' +
         '<div class="form-group"><label class="form-label">Message</label><textarea class="form-control" id="demande-message"></textarea></div>' +
         '<div id="demande-form-erreur" class="demande-form-erreur cache"></div>' +
-        '<button type="button" class="bouton bouton-grand demande-form-envoyer" data-action="envoyer">Envoyer la demande</button>' +
+        '<button type="button" class="bouton bouton-grand demande-form-envoyer" data-action="envoyer">Envoyer vos Coups de coeur</button>' +
       '</div>' +
       '<div id="demande-vue-merci" class="cache">' +
-        '<h2 class="demande-modal-titre">Coups de cœur reçus!</h2>' +
+        '<h2 class="demande-modal-titre">Merci de votre intérêt</h2>' +
         '<p class="demande-form-intro">Merci! Nous avons bien reçu vos Coups de coeur. Nous vous reviendrons très bientôt pour confirmer la disponibilité des produits et les frais de livraison. À bientôt!</p>' +
         '<p class="demande-form-intro">Surveillez votre boîte de réception et pensez à vérifier vos pourriels, au cas où.</p>' +
         '<button type="button" class="bouton bouton-grand demande-continuer" data-action="fermer">Fermer</button>' +
@@ -299,6 +300,7 @@ function demandeRendreListe() {
         photo +
         '<div class="demande-item-infos">' +
           (i.nom_collection ? '<span class="demande-item-collection">' + i.nom_collection + '</span>' : '') +
+          (i.nom_gamme ? '<span class="demande-item-gamme">' + i.nom_gamme + '</span>' : '') +
           '<span class="demande-item-nom">' + (i.nom_produit || '') + '</span>' +
           '<span class="demande-item-format">' + i.format_poids + ' ' + i.format_unite + '</span>' +
         '</div>' +
@@ -358,7 +360,7 @@ async function demandeEnvoyer() {
   }
   erreurEl.classList.add('cache');
 
-  if (btn) { btn.disabled = true; btn.textContent = 'Envoi en cours…'; }
+  if (btn) { btn.disabled = true; btn.style.position = 'relative'; btn.insertAdjacentHTML('beforeend', '<div id="demande-spinner-overlay" style="position:absolute;inset:0;background:var(--primary);display:flex;align-items:center;justify-content:center;"><span class=\'spinner\' style=\'margin-right:0\'><span></span><span></span><span></span><span></span><span></span></span></div>'); }
 
   const lignes = demandeListe.map(i => ({
     pro_id: i.pro_id,
@@ -387,7 +389,7 @@ async function demandeEnvoyer() {
     erreurEl.textContent = "Une erreur s'est produite. Veuillez réessayer ou nous écrire directement.";
     erreurEl.classList.remove('cache');
   }
-  if (btn) { btn.disabled = false; btn.textContent = 'Envoyer mes coups de cœur'; }
+  if (btn) { btn.disabled = false; const ov = document.getElementById('demande-spinner-overlay'); if (ov) ov.remove(); }
 }
 
 // ─── INITIALISATION ───
