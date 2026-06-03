@@ -407,30 +407,29 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 
-// ── Étape 2-3 — lire le numéro + aller chercher la commande ──
+// ── Étape 3 — afficher la commande dans la liste de coups de cœur ──
 window.addEventListener('DOMContentLoaded', async function () {
   const params = new URLSearchParams(window.location.search);
   const numero = params.get('cmd');
-  if (!numero) return; // pas de numéro → la page reste normale
+  if (!numero) return;
 
-  // Ouvrir la section coup de cœur
   document.querySelectorAll('.page-section').forEach(s => s.classList.remove('active'));
   const section = document.getElementById('section-coupdecoeur');
   if (section) section.classList.add('active');
 
-  const zone = document.getElementById('coupdecoeur-commande');
-
-  // Aller chercher la commande au serveur
   try {
     const res = (typeof appelAPIPost === 'function')
       ? await appelAPIPost('getCommandePublique', { cmd_id: numero })
       : null;
-    if (res && res.success) {
-      if (zone) zone.textContent = 'Commande ' + numero + ' — statut : ' + res.statut + ' — ' + res.lignes.length + ' produit(s)';
-    } else {
-      if (zone) zone.textContent = 'Commande introuvable.';
-    }
-  } catch (e) {
-    if (zone) zone.textContent = 'Erreur de chargement.';
-  }
+    if (!res || !res.success) return;
+
+    demandeListe = res.lignes.map(l => ({
+      pro_id: l.pro_id, format_poids: l.format_poids, format_unite: l.format_unite,
+      nom_produit: l.nom, prix_unitaire: l.prix_unitaire, image_url: l.image_url,
+      nom_collection: l.nom_collection, nom_gamme: l.nom_gamme, quantite: l.quantite
+    }));
+    sauvegarderDemandeListe();
+    demandeRafraichirAffichage();
+    demandeOuvrirModalListe();
+  } catch (e) {}
 });
