@@ -407,8 +407,8 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 
-// ── Étape 2 — lire le numéro de commande dans le lien ──
-window.addEventListener('DOMContentLoaded', function () {
+// ── Étape 2-3 — lire le numéro + aller chercher la commande ──
+window.addEventListener('DOMContentLoaded', async function () {
   const params = new URLSearchParams(window.location.search);
   const numero = params.get('cmd');
   if (!numero) return; // pas de numéro → la page reste normale
@@ -418,7 +418,19 @@ window.addEventListener('DOMContentLoaded', function () {
   const section = document.getElementById('section-coupdecoeur');
   if (section) section.classList.add('active');
 
-  // Preuve temporaire que le numéro est bien lu
   const zone = document.getElementById('coupdecoeur-commande');
-  if (zone) zone.textContent = 'Commande lue : ' + numero;
+
+  // Aller chercher la commande au serveur
+  try {
+    const res = (typeof appelAPIPost === 'function')
+      ? await appelAPIPost('getCommandePublique', { cmd_id: numero })
+      : null;
+    if (res && res.success) {
+      if (zone) zone.textContent = 'Commande ' + numero + ' — statut : ' + res.statut + ' — ' + res.lignes.length + ' produit(s)';
+    } else {
+      if (zone) zone.textContent = 'Commande introuvable.';
+    }
+  } catch (e) {
+    if (zone) zone.textContent = 'Erreur de chargement.';
+  }
 });
