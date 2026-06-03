@@ -1231,6 +1231,121 @@ async function envoyerProposition() {
   fermerFormCompleter();
   chargerCommandes();
 }
+async function envoyerPropositiontest() {
+  if (!cmdCompleterIdEnCours) return;
+  const c = toutesCommandes.find(x => x.cmd_id === cmdCompleterIdEnCours);
+  if (!c) return;
+  fermerApercuProposition();
+
+  const prenom    = document.getElementById('completer-prenom').value.trim();
+  const nom       = document.getElementById('completer-client').value.trim();
+  const client    = (prenom + ' ' + nom).trim();
+  const courriel  = document.getElementById('completer-courriel').value.trim();
+  const telephone = document.getElementById('completer-telephone').value.trim();
+  const livraison = document.getElementById('completer-livraison').value;
+  const note      = document.getElementById('completer-note').value;
+  const square    = document.getElementById('completer-square').value;
+  const livraisonNum = parseFloat(String(livraison).replace(',', '.')) || 0;
+
+  // Ouvrir le texto tout de suite — doit partir du clic direct, avant les envois
+  if (telephone) {
+    let texteSms = 'Bonjour ' + (client || '') + ',\n\n';
+    texteSms += 'Votre proposition de commande Univers Caresse vient de vous être envoyée par courriel.\n';
+    texteSms += 'Pensez à vérifier vos courriels indésirables (pourriels) si vous ne la voyez pas.\n\n';
+    texteSms += 'Merci !\nUnivers Caresse';
+    window.open('sms:' + telephone + '?body=' + encodeURIComponent(texteSms));
+  }
+
+  afficherChargement();
+
+  const dateProposition = new Date().toLocaleDateString('fr-CA');
+
+  const lignesPayload = toutesCommandesLignes.filter(l => l.cmd_id === cmdCompleterIdEnCours).map(l => ({
+    pro_id: l.pro_id,
+    format_poids: l.format_poids,
+    format_unite: l.format_unite,
+    quantite: l.quantite,
+    prix_unitaire: l.prix_unitaire
+  }));
+
+  const rabais = cmdCompleterCalculerRabais();
+  const promoInfo = cmdCompleterTypePromo();
+  const totalAvec = Math.max(0, (c.total_prevu || 0) + livraisonNum - rabais);
+
+  const resUpdate = await appelAPIPost('updateCommandeComplete', {
+    cmd_id: cmdCompleterIdEnCours,
+    client: client,
+    prenom: prenom,
+    nom: nom,
+    courriel: courriel,
+    telephone: telephone,
+    code_postal: c.code_postal,
+    total_prevu: totalAvec,
+    acompte: c.acompte || 0,
+    solde: totalAvec - (c.acompte || 0),
+    note_proposition: note,
+    lien_square: square,
+    livraison: livraisonNum,
+    rabais: rabais,
+    promo_id: promoInfo.promo_id,
+    type_promo: promoInfo.type,
+    date_proposition: dateProposition,
+    lignes: lignesPayload
+  });
+
+  if (!resUpdate || !resUpdate.success) {
+    cacherChargement();
+    afficherMsg('commandes', 'Erreur lors de la sauvegarde.', 'erreur');
+    return;
+  }
+
+  const resStock = await appelAPIPost('sortirStockCommande', {
+    cmd_id: cmdCompleterIdEnCours
+  });
+
+  if (!resStock || !resStock.success) {
+    cacherChargement();
+    afficherMsg('commandes', '❌ ' + (resStock?.message || 'Erreur lors de la sortie du stock.'), 'erreur');
+    return;
+  }
+
+  // Envoi du courriel de proposition au client
+  const lignesCourriel = toutesCommandesLignes.filter(l => l.cmd_id === cmdCompleterIdEnCours).map(l => {
+    const pro = donneesProduits.find(p => p.pro_id === l.pro_id);
+    return {
+      nom: pro ? pro.nom : l.pro_id,
+      poids: l.format_poids,
+      unite: l.format_unite,
+      quantite: l.quantite,
+      prix_unitaire: formaterPrix(l.prix_unitaire),
+      prix_total: formaterPrix(l.prix_unitaire * l.quantite)
+    };
+  });
+
+  const resCourriel = await appelAPIPost('envoyerPropositiontest', {
+    courriel: courriel,
+    client: client,
+    numero: c.cmd_id,
+    note: note,
+    lien_square: square,
+    lignes: lignesCourriel,
+    sous_total: formaterPrix(c.total_prevu || 0),
+    rabais: rabais > 0 ? formaterPrix(rabais) : 0,
+    promo_nom: cmdCompleterNomPromo(),
+    livraison: livraisonNum > 0 ? formaterPrix(livraisonNum) : 0,
+    total: formaterPrix(totalAvec)
+  });
+
+  cacherChargement();
+
+  if (resCourriel && resCourriel.success) {
+    afficherMsg('commandes', '✅ Proposition envoyée au client, stock sorti.');
+  } else {
+    afficherMsg('commandes', '⚠️ Stock sorti, mais le courriel n\'est pas parti : ' + (resCourriel?.message || 'erreur') + '. Corrige le courriel et renvoie.', 'erreur');
+  }
+  fermerFormCompleter();
+  chargerCommandes();
+}
 
 var cmdPaiementIdEnCours = null;
 
