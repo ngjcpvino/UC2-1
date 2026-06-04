@@ -443,7 +443,79 @@ window.addEventListener('DOMContentLoaded', async function () {
     }));
     sauvegarderDemandeListe();
     demandeRafraichirAffichage();
-    demandeOuvrirModalListe();
+
+    function coupdecoeurRendre() {
+      if (!zone) return;
+      if (!demandeListe.length) {
+        zone.innerHTML = '<h2 class="demande-modal-titre">Vos Coups de cœur</h2>' +
+          '<p>Vous avez retiré tous les produits. Si c\'est une erreur, rechargez la page.</p>' +
+          '<button type="button" class="bouton bouton-grand" onclick="naviguer(\'accueil\')">Fermer</button>';
+        return;
+      }
+      let total = 0;
+      let html = '<h2 class="demande-modal-titre">Vos Coups de cœur</h2><div class="coupdecoeur-liste">';
+      demandeListe.forEach(i => {
+        const sous = (i.prix_unitaire || 0) * (i.quantite || 1);
+        total += sous;
+        const cle = i.pro_id + '|' + i.format_poids + '|' + i.format_unite;
+        html += '<div class="coupdecoeur-ligne" data-cle="' + cle + '">' +
+            '<div class="coupdecoeur-nom">' + (i.nom_produit || i.pro_id) + '</div>' +
+            '<div class="coupdecoeur-format">' + i.format_poids + ' ' + i.format_unite + '</div>' +
+            '<div class="coupdecoeur-controles">' +
+              '<button type="button" class="coupdecoeur-moins" data-action="moins">−</button>' +
+              '<span class="coupdecoeur-qte">' + (i.quantite || 1) + '</span>' +
+              '<button type="button" class="coupdecoeur-plus" data-action="plus">+</button>' +
+              '<button type="button" class="coupdecoeur-retirer" data-action="retirer">Retirer</button>' +
+            '</div>' +
+            '<div class="coupdecoeur-sous">' + sous.toFixed(2).replace('.', ',') + ' $</div>' +
+          '</div>';
+      });
+      html += '</div><div class="coupdecoeur-pied"><span>Total avant les frais de livraison</span>' +
+        '<span>' + total.toFixed(2).replace('.', ',') + ' $</span></div>' +
+        '<button type="button" class="bouton bouton-grand" data-action="renvoyer">Renvoyer ma liste</button>' +
+        '<div id="coupdecoeur-msg" class="cache"></div>';
+      zone.innerHTML = html;
+    }
+
+    if (zone) zone.addEventListener('click', async function (ev) {
+      const btn = ev.target.closest('[data-action]');
+      if (!btn) return;
+      const action = btn.dataset.action;
+
+      if (action === 'renvoyer') {
+        btn.disabled = true;
+        const msg = document.getElementById('coupdecoeur-msg');
+        try {
+          const lignes = demandeListe.map(i => ({
+            pro_id: i.pro_id, format_poids: i.format_poids, format_unite: i.format_unite,
+            quantite: i.quantite, prix_unitaire: i.prix_unitaire
+          }));
+          const r = await appelAPIPost('renvoyerListeCoupdecoeur', { cmd_id: numero, lignes });
+          if (r && r.success) {
+            zone.innerHTML = '<h2 class="demande-modal-titre">Merci !</h2>' +
+              '<p>Votre liste modifiée a bien été envoyée. Nous vous reviendrons très bientôt.</p>' +
+              '<button type="button" class="bouton bouton-grand" onclick="naviguer(\'accueil\')">Fermer</button>';
+          } else {
+            if (msg) { msg.textContent = 'Erreur : ' + ((r && r.message) || 'envoi échoué'); msg.classList.remove('cache'); }
+            btn.disabled = false;
+          }
+        } catch (e) {
+          if (msg) { msg.textContent = 'Erreur : ' + e.message; msg.classList.remove('cache'); }
+          btn.disabled = false;
+        }
+        return;
+      }
+
+      const ligne = btn.closest('[data-cle]');
+      if (!ligne) return;
+      const [pro_id, fp, fu] = ligne.dataset.cle.split('|');
+      if (action === 'plus')    demandeChangerQuantite(pro_id, fp, fu, 1);
+      if (action === 'moins')   demandeChangerQuantite(pro_id, fp, fu, -1);
+      if (action === 'retirer') demandeRetirer(pro_id, fp, fu);
+      coupdecoeurRendre();
+    });
+
+    coupdecoeurRendre();
   } catch (e) {
     if (zone) zone.textContent = 'Erreur : ' + e.message;
   }
