@@ -1234,7 +1234,7 @@ async function envoyerProposition() {
   fermerFormCompleter();
   chargerCommandes();
 }
-async function envoyerPropositionV3() { {
+async function envoyerPropositionV3() { 
   if (!cmdCompleterIdEnCours) return;
   const c = toutesCommandes.find(x => x.cmd_id === cmdCompleterIdEnCours);
   if (!c) return;
