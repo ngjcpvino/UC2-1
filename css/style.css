@@ -1144,9 +1144,9 @@ tr.cliquable { cursor: pointer; }
     border-left: 3px solid transparent;
   }
   .nav-dropdown-item:hover {
-    background: rgba(90,138,58,0.05);
+   /* background: rgba(90,138,58,0.05);*/
     color: var(--primary);
-    border-left-color: var(--primary);
+    border-left-color: var(--accent);
   }
   .nav-dropdown-item.bientot {
     color: var(--beige);
