@@ -425,6 +425,7 @@ window.addEventListener('DOMContentLoaded', async function () {
     if (!res.success) { if (zone) zone.textContent = 'Réponse : ' + (res.message || 'échec'); return; }
 
     if (res.statut !== 'En attente de paiement') {
+      demandeVider();
       if (zone) zone.innerHTML = '';
       const bloque = document.getElementById('coupdecoeur-bloque');
       if (bloque) {
